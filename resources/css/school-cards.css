@@ -1,0 +1,193 @@
+/* NEXORA ERP — Gestion scolaire | Cartes scolaires */
+.cards-page {
+    --navy:#123c72;
+    --border:#e2e8f0;
+    --muted:#64748b;
+    max-width:1400px;
+    margin:0 auto;
+    padding:12px 4px 32px}
+
+.cards-hero {
+    background:linear-gradient(125deg,#0f294b,#164e85);
+    color:white;
+    padding:27px 30px;
+    border-radius:17px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px}
+
+.cards-eyebrow {
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:#bdd9f4;
+    font-weight:700}
+
+.cards-hero h1 {
+    font-size:27px;
+    margin:8px 0}
+
+.cards-hero p {
+    margin:0;
+    color:#d5e6f7;
+    font-size:13px}
+
+.cards-hero-icon {
+    font-size:55px;
+    opacity:.25}
+
+.cards-panel {
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 5px 22px #1e293b0a}
+
+.cards-filters {
+    display:grid;
+    grid-template-columns:1fr 1fr 1.4fr auto auto;
+    align-items:end;
+    gap:14px}
+
+.cards-filters label {
+    font-size:12px;
+    font-weight:700;
+    color:#334155;
+    display:grid;
+    gap:7px}
+
+.cards-filters select,.cards-filters input {
+    height:42px;
+    width:100%;
+    padding:0 11px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    font:inherit;
+    font-size:13px;
+    background:#fff}
+
+.cards-btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    border:0;
+    border-radius:9px;
+    padding:11px 14px;
+    min-height:40px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    white-space:nowrap}
+
+.cards-btn-primary {
+    background:var(--navy);
+    color:#fff}
+
+.cards-btn-muted {
+    background:#edf3fa;
+    color:#123c72}
+
+.cards-toolbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+    padding:14px 18px;
+    border:1px solid #c8d9ef;
+    background:#eff6ff;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:600}
+
+.cards-toolbar>div {
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap}
+
+.cards-section-head {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px}
+
+.cards-section-head h2 {
+    margin:0;
+    font-size:18px;
+    color:#0f172a}
+
+.cards-section-head span {
+    font-size:12px;
+    color:var(--muted)}
+
+.cards-table-wrap {
+    overflow-x:auto}
+
+.cards-table {
+    width:100%;
+    border-collapse:collapse;
+    min-width:630px}
+
+.cards-table th {
+    text-align:left;
+    padding:12px;
+    background:#f1f5fa;
+    color:#475569;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.5px}
+
+.cards-table td {
+    padding:13px 12px;
+    border-bottom:1px solid #edf1f6;
+    font-size:13px}
+
+.cards-table tr:hover td {
+    background:#fafcff}
+
+.cards-actions {
+    white-space:nowrap}
+
+.cards-actions .cards-btn {
+    margin-right:6px}
+
+.cards-empty {
+    text-align:center;
+    padding:32px!important;
+    color:#64748b}
+
+.cards-pagination {
+    margin-top:18px}
+
+@media(max-width:1000px) {
+    .cards-filters {
+    grid-template-columns:repeat(2,minmax(0,1fr))}
+
+}
+
+@media(max-width:600px) {
+    .cards-hero {
+    padding:20px}
+
+.cards-hero h1 {
+    font-size:23px}
+
+.cards-hero-icon {
+    display:none}
+
+.cards-filters {
+    grid-template-columns:1fr}
+
+.cards-panel {
+    padding:14px}
+
+.cards-toolbar {
+    align-items:flex-start;
+    flex-direction:column}
+
+}
+
+

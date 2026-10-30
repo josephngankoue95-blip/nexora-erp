@@ -1,0 +1,1232 @@
+
+/* =========================================================
+   NEXORA WEBSTUDIO PREMIUM
+   ÉDITEUR VISUEL — CSS NATIF
+   ========================================================= */
+
+#wb-builder {
+    --wb-primary: #6354e8;
+    --wb-primary-dark: #4f3dc8;
+    --wb-primary-light: #f1efff;
+    --wb-text: #17233d;
+    --wb-muted: #74819a;
+    --wb-border: #e4e9f2;
+    --wb-background: #f4f6fb;
+    --wb-white: #ffffff;
+    --wb-radius: 12px;
+
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    color: var(--wb-text);
+    font-family: Inter, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    isolation: isolate;
+}
+
+#wb-builder,
+#wb-builder *,
+#wb-builder *::before,
+#wb-builder *::after {
+    box-sizing: border-box;
+}
+
+#wb-builder button,
+#wb-builder input,
+#wb-builder textarea,
+#wb-builder select {
+    font: inherit;
+}
+
+#wb-builder button {
+    cursor: pointer;
+}
+
+#wb-builder button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+#wb-builder button:focus-visible,
+#wb-builder input:focus-visible,
+#wb-builder select:focus-visible,
+#wb-builder textarea:focus-visible {
+    outline: 2px solid var(--wb-primary);
+    outline-offset: 2px;
+}
+
+#wb-form {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    background: var(--wb-white);
+    border: 1px solid var(--wb-border);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(21, 33, 60, .06);
+}
+
+/* =========================================================
+   ALERTES
+   ========================================================= */
+
+#wb-builder .wb2-alert,
+#wb-builder .wb2-error {
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border: 1px solid;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+#wb-builder .wb2-alert {
+    color: #13734b;
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+#wb-builder .wb2-error {
+    color: #b42318;
+    background: #fff1f0;
+    border-color: #fecaca;
+}
+
+#wb-builder .wb2-error p {
+    margin: 4px 0;
+}
+
+/* =========================================================
+   BARRE D'OUTILS
+   ========================================================= */
+
+#wb-builder .wb2-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    min-height: 74px;
+    padding: 12px 20px;
+    background: #fff;
+    border-bottom: 1px solid var(--wb-border);
+}
+
+#wb-builder .wb2-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+#wb-builder .wb2-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: #53617b;
+    background: transparent;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 21px;
+}
+
+#wb-builder .wb2-back:hover {
+    background: var(--wb-primary-light);
+    color: var(--wb-primary);
+}
+
+#wb-builder .wb2-brand-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    color: var(--wb-primary);
+    background: var(--wb-primary-light);
+    border-radius: 11px;
+    font-size: 19px;
+}
+
+#wb-builder .wb2-brand strong {
+    display: block;
+    color: var(--wb-text);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+#wb-builder .wb2-brand small {
+    display: block;
+    margin-top: 2px;
+    color: var(--wb-muted);
+    font-size: 11px;
+}
+
+/* PRÉVISUALISATION DES APPAREILS */
+
+#wb-builder .wb2-devices {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: #f3f5fa;
+    border-radius: 11px;
+}
+
+#wb-builder .wb2-devices button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 38px;
+    height: 36px;
+    padding: 0 11px;
+    color: #697790;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    font-size: 12px;
+    transition: background .2s, color .2s;
+}
+
+#wb-builder .wb2-devices button.active {
+    color: var(--wb-primary);
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(30, 41, 59, .09);
+}
+
+/* ACTIONS */
+
+#wb-builder .wb2-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#wb-builder .wb2-actions > button:not(.wb2-save) {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 36px;
+    padding: 0;
+    color: #64748b;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+#wb-builder .wb2-actions > button:not(.wb2-save):hover {
+    background: #f1f3fa;
+    color: var(--wb-primary);
+}
+
+#wb-builder .wb2-actions select {
+    min-height: 38px;
+    max-width: 145px;
+    padding: 8px 10px;
+    color: var(--wb-text);
+    background: white;
+    border: 1px solid var(--wb-border);
+    border-radius: 9px;
+    font-size: 12px;
+}
+
+#wb-builder .wb2-save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 39px;
+    padding: 10px 17px;
+    color: white;
+    background: linear-gradient(135deg, #7767f5, #5946d9);
+    border: 0;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(99, 84, 232, .2);
+}
+
+#wb-builder .wb2-save:hover {
+    background: var(--wb-primary-dark);
+}
+
+/* =========================================================
+   STRUCTURE PRINCIPALE
+   ========================================================= */
+
+#wb-builder .wb2-layout {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr) 260px;
+    width: 100%;
+    min-width: 0;
+    min-height: 670px;
+    background: var(--wb-background);
+}
+
+#wb-builder .wb2-library,
+#wb-builder .wb2-inspector {
+    display: block;
+    min-width: 0;
+    height: 670px;
+    padding: 20px 15px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #fff;
+    scrollbar-width: thin;
+    scrollbar-color: #d4dbee transparent;
+}
+
+#wb-builder .wb2-library {
+    border-right: 1px solid var(--wb-border);
+}
+
+#wb-builder .wb2-inspector {
+    border-left: 1px solid var(--wb-border);
+}
+
+#wb-builder .wb2-panel-head {
+    margin-bottom: 18px;
+}
+
+#wb-builder .wb2-eyebrow {
+    display: block;
+    color: var(--wb-primary);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+#wb-builder .wb2-panel-head h2 {
+    margin: 7px 0 6px;
+    color: var(--wb-text);
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 800;
+}
+
+#wb-builder .wb2-panel-head p,
+#wb-builder .wb2-muted {
+    margin: 0;
+    color: var(--wb-muted);
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+/* =========================================================
+   BIBLIOTHÈQUE
+   ========================================================= */
+
+#wb-builder .wb2-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 43px;
+    padding: 0 11px;
+    margin-bottom: 21px;
+    background: #f7f8fc;
+    border: 1px solid var(--wb-border);
+    border-radius: 10px;
+}
+
+#wb-builder .wb2-search-wrap span {
+    color: #63728c;
+    font-size: 16px;
+}
+
+#wb-builder #wb-search {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 0;
+    color: var(--wb-text);
+    background: transparent;
+    border: 0;
+    outline: none;
+    font-size: 11px;
+}
+
+#wb-builder .wb2-category {
+    display: block;
+    margin-bottom: 23px;
+}
+
+#wb-builder .wb2-category-title {
+    display: block;
+    margin: 0 0 10px;
+    color: #74819b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#wb-builder .wb2-category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+}
+
+#wb-builder .wb2-library-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    min-height: 86px;
+    padding: 11px 5px;
+    color: #25324c;
+    background: white;
+    border: 1px solid var(--wb-border);
+    border-radius: 11px;
+    text-align: center;
+    transition: transform .18s, border-color .18s,
+        box-shadow .18s;
+}
+
+#wb-builder .wb2-library-item:hover {
+    transform: translateY(-2px);
+    border-color: #aaa0fa;
+    box-shadow: 0 7px 17px rgba(99, 84, 232, .12);
+}
+
+#wb-builder .wb2-library-icon {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 35px;
+    color: var(--wb-primary);
+    background: var(--wb-primary-light);
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#wb-builder .wb2-library-name {
+    display: block;
+    max-width: 100%;
+    color: #26334c;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+#wb-builder .wb2-tip {
+    margin: 18px 0 0;
+    padding: 12px;
+    color: #7884a0;
+    background: #f6f4ff;
+    border-radius: 10px;
+    font-size: 10px;
+    line-height: 1.65;
+}
+
+/* =========================================================
+   ESPACE CENTRAL
+   ========================================================= */
+
+#wb-builder .wb2-workspace {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #f3f5fb;
+}
+
+#wb-builder .wb2-workspace-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 46px;
+    padding: 12px 17px;
+    color: #7885a0;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .8px;
+}
+
+#wb-builder .wb2-live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 6px;
+    background: #34bd8a;
+    border-radius: 50%;
+}
+
+#wb-builder .wb2-stage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    overflow: auto;
+    background-image: radial-gradient(
+        #dce2ee 0.8px,
+        transparent 0.8px
+    );
+    background-size: 18px 18px;
+}
+
+#wb-builder .wb2-canvas {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 540px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e6eaf2;
+    border-radius: 9px;
+    box-shadow: 0 12px 30px rgba(23, 35, 61, .06);
+    transition: width .25s ease;
+}
+
+#wb-builder .wb2-canvas[data-device="tablet"] {
+    width: min(768px, 100%);
+}
+
+#wb-builder .wb2-canvas[data-device="mobile"] {
+    width: min(390px, 100%);
+}
+
+#wb-builder .wb2-foot {
+    padding: 13px;
+    color: #8792a8;
+    background: #f7f8fc;
+    border-top: 1px solid #e9edf5;
+    text-align: center;
+    font-size: 10px;
+}
+
+/* =========================================================
+   BLOCS DE L'ÉDITEUR
+   ========================================================= */
+
+#wb-builder .wb2-editor-block {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: white;
+    border: 2px solid transparent;
+    transition: border-color .15s ease;
+}
+
+#wb-builder .wb2-editor-block:hover {
+    border-color: #c8c1fa;
+}
+
+#wb-builder .wb2-editor-block.is-selected {
+    border-color: var(--wb-primary);
+}
+
+#wb-builder .wb2-editor-block-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 42px;
+    padding: 6px 11px;
+    color: #5948d0;
+    background: #f5f2ff;
+    border-bottom: 1px solid #e9e5ff;
+}
+
+#wb-builder .wb2-editor-block-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+#wb-builder .wb2-drag-handle {
+    font-size: 18px;
+    cursor: grab;
+    user-select: none;
+}
+
+#wb-builder .wb2-editor-block-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#wb-builder .wb2-editor-block-actions button {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    color: #5948d0;
+    background: white;
+    border: 1px solid #e5e0ff;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+#wb-builder .wb2-editor-block-actions button:hover {
+    color: white;
+    background: var(--wb-primary);
+}
+
+#wb-builder .wb2-editor-block-preview {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 75px;
+    padding: 18px;
+    color: #25324c;
+    overflow-wrap: anywhere;
+}
+
+#wb-builder .wb2-editor-block-preview h2 {
+    margin: 0 0 12px;
+    color: #17233d;
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+#wb-builder .wb2-editor-block-preview h3 {
+    margin: 0 0 14px;
+    color: #17233d;
+    font-size: 20px;
+}
+
+#wb-builder .wb2-editor-block-preview p {
+    margin: 0;
+    color: #56637a;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+#wb-builder .wb2-preview-text {
+    white-space: pre-wrap;
+}
+
+/* =========================================================
+   BANNIÈRES ET CARROUSELS
+   ========================================================= */
+
+#wb-builder .wb2-preview-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: clamp(210px, 26vw, 310px);
+    min-height: 0;
+    overflow: hidden;
+    background: linear-gradient(125deg, #142b4c, #42658e);
+    border-radius: 12px;
+}
+
+#wb-builder .wb2-preview-hero > img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#wb-builder .wb2-preview-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(8, 21, 42, .75),
+        rgba(8, 21, 42, .1)
+    );
+    pointer-events: none;
+}
+
+#wb-builder .wb2-preview-copy {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: clamp(18px, 3vw, 34px);
+    color: white;
+}
+
+#wb-builder .wb2-preview-copy strong {
+    display: block;
+    max-width: 650px;
+    color: white;
+    font-size: clamp(22px, 3vw, 40px);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+#wb-builder .wb2-preview-copy p {
+    margin-top: 9px;
+    color: #f1f5f9;
+    font-size: 13px;
+}
+
+#wb-builder .wb2-preview-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 130px;
+    padding: 20px;
+    color: #8190ab;
+    background: #eaf0f8;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+#wb-builder .wb2-preview-hero > .wb2-preview-placeholder {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border-radius: 0;
+}
+
+/* =========================================================
+   IMAGES ET GALERIES
+   ========================================================= */
+
+#wb-builder .wb2-preview-gallery {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(140px, 100%), 1fr)
+    );
+    gap: 12px;
+    width: 100%;
+}
+
+#wb-builder .wb2-preview-gallery img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 11px;
+}
+
+/* =========================================================
+   COMPOSANTS DE CONTENU
+   ========================================================= */
+
+#wb-builder .wb2-preview-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    color: white;
+    background: var(--wb-primary);
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+#wb-builder .wb2-preview-label {
+    display: inline-block;
+    padding: 8px 15px;
+    color: #4f3dc8;
+    background: #efedff;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#wb-builder .wb2-preview-divider {
+    width: 100%;
+    margin: 12px 0;
+    border: 0;
+    border-top: 1px solid #dce3ed;
+}
+
+#wb-builder .wb2-preview-spacer {
+    display: grid;
+    place-items: center;
+    color: #97a3b6;
+    border: 1px dashed #d5dce9;
+    background: #fafbfe;
+    font-size: 10px;
+}
+
+#wb-builder .wb2-preview-grid {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+}
+
+#wb-builder .wb2-preview-grid.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#wb-builder .wb2-preview-grid.three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#wb-builder .wb2-preview-grid > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 105px;
+    padding: 18px 12px;
+    color: #293854;
+    background: #f8faff;
+    border: 1px solid #e5eaf3;
+    border-radius: 11px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+#wb-builder .wb2-preview-quote {
+    margin: 0;
+    padding: 25px;
+    color: #34425f;
+    background: #f8f7ff;
+    border-left: 4px solid var(--wb-primary);
+    border-radius: 10px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+#wb-builder .wb2-preview-faq {
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--wb-border);
+    border-radius: 11px;
+}
+
+#wb-builder .wb2-preview-faq strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+
+#wb-builder .wb2-preview-faq small {
+    color: var(--wb-muted);
+    font-size: 12px;
+}
+
+/* VIDÉO */
+
+#wb-builder .wb2-preview-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 230px;
+    padding: 20px;
+    color: white;
+    background: linear-gradient(135deg, #152d50, #263d65);
+    border-radius: 12px;
+    text-align: center;
+}
+
+#wb-builder .wb2-preview-video > span {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    color: white;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 50%;
+    font-size: 26px;
+}
+
+#wb-builder .wb2-preview-video strong {
+    font-size: 17px;
+}
+
+#wb-builder .wb2-preview-video small {
+    max-width: 100%;
+    color: #d6deec;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   PANNEAU PROPRIÉTÉS
+   ========================================================= */
+
+#wb-builder .wb2-inspector-component {
+    display: block;
+    margin: 16px 0 20px;
+    padding: 11px 13px;
+    color: #5948d0;
+    background: #f4f1ff;
+    border: 1px solid #e8e3ff;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+#wb-builder .wb2-field {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 17px;
+    padding: 0;
+}
+
+#wb-builder .wb2-field-label {
+    display: block;
+    width: 100%;
+    color: #53617b;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+#wb-builder .wb2-field input,
+#wb-builder .wb2-field textarea,
+#wb-builder .wb2-field select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 40px;
+    margin: 0;
+    padding: 10px 11px;
+    color: #26334d;
+    background: white;
+    border: 1px solid #dce3ee;
+    border-radius: 9px;
+    font-size: 12px;
+    line-height: 1.5;
+    box-shadow: none;
+}
+
+#wb-builder .wb2-field textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+#wb-builder .wb2-field input:focus,
+#wb-builder .wb2-field textarea:focus,
+#wb-builder .wb2-field select:focus {
+    outline: none;
+    border-color: var(--wb-primary);
+    box-shadow: 0 0 0 3px rgba(99, 84, 232, .1);
+}
+
+#wb-builder .wb2-field input[readonly] {
+    color: #7b879b;
+    background: #f8f9fc;
+}
+
+#wb-builder .wb2-media-pick {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    padding: 10px;
+    color: #2459c7;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+#wb-builder .wb2-media-pick:hover {
+    background: #dbeafe;
+}
+
+/* =========================================================
+   ÉTAT VIDE
+   ========================================================= */
+
+#wb-builder .wb2-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 460px;
+    padding: 30px;
+    color: var(--wb-muted);
+    text-align: center;
+}
+
+#wb-builder .wb2-empty-state > span {
+    color: var(--wb-primary);
+    font-size: 43px;
+}
+
+#wb-builder .wb2-empty-state h3 {
+    margin: 0;
+    color: var(--wb-text);
+    font-size: 20px;
+}
+
+#wb-builder .wb2-empty-state p {
+    margin: 0;
+    font-size: 12px;
+}
+
+/* =========================================================
+   MÉDIATHÈQUE
+   IMPORTANT : modal placé hors de #wb-builder
+   ========================================================= */
+
+#wb-media-modal[hidden] {
+    display: none !important;
+}
+
+#wb-media-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(10, 20, 44, .78);
+    backdrop-filter: blur(5px);
+}
+
+#wb-media-modal,
+#wb-media-modal * {
+    box-sizing: border-box;
+}
+
+#wb-media-modal .wb2-media-dialog {
+    width: min(880px, 100%);
+    max-height: 88vh;
+    padding: 24px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 17px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .25);
+}
+
+#wb-media-modal .wb2-media-dialog header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+#wb-media-modal .wb2-media-dialog header strong {
+    color: #17233d;
+    font-size: 19px;
+}
+
+#wb-media-modal .wb2-media-dialog header p {
+    margin: 6px 0 0;
+    color: #71809a;
+    font-size: 12px;
+}
+
+#wb-media-modal #wb-media-close {
+    flex-shrink: 0;
+    width: 35px;
+    height: 35px;
+    background: #f1f3f8;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+#wb-media-modal .wb2-upload-zone {
+    display: block;
+    padding: 22px;
+    margin-bottom: 17px;
+    color: #2459c7;
+    background: #f1f6ff;
+    border: 2px dashed #aac5ef;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#wb-media-modal #wb-media-message {
+    margin: 10px 0;
+    color: #53617b;
+    font-size: 12px;
+}
+
+#wb-media-modal .wb2-media-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(135px, 1fr)
+    );
+    gap: 12px;
+}
+
+#wb-media-modal .wb2-media-item {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    background: white;
+    border: 1px solid #e3e8f1;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#wb-media-modal .wb2-media-item:hover {
+    border-color: #7767f5;
+    box-shadow: 0 6px 17px rgba(99, 84, 232, .15);
+}
+
+#wb-media-modal .wb2-media-item img {
+    display: block;
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1250px) {
+    #wb-builder .wb2-layout {
+        grid-template-columns: 205px minmax(0, 1fr) 230px;
+    }
+
+    #wb-builder .wb2-library,
+    #wb-builder .wb2-inspector {
+        padding: 16px 11px;
+    }
+}
+
+@media (max-width: 1050px) {
+    #wb-builder .wb2-layout {
+        grid-template-columns: 205px minmax(0, 1fr);
+    }
+
+    #wb-builder .wb2-inspector {
+        grid-column: 1 / -1;
+        height: auto;
+        max-height: none;
+        border-left: 0;
+        border-top: 1px solid var(--wb-border);
+    }
+
+    #wb-builder .wb2-library {
+        height: 670px;
+    }
+}
+
+@media (max-width: 700px) {
+    #wb-builder .wb2-bar {
+        padding: 12px;
+    }
+
+    #wb-builder .wb2-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #wb-builder .wb2-library,
+    #wb-builder .wb2-inspector {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--wb-border);
+    }
+
+    #wb-builder .wb2-category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #wb-builder .wb2-devices {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+
+    #wb-builder .wb2-actions {
+        flex-wrap: wrap;
+    }
+
+    #wb-builder .wb2-stage {
+        min-height: 400px;
+        padding: 9px;
+    }
+
+    #wb-builder .wb2-canvas {
+        min-height: 380px;
+    }
+
+    #wb-builder .wb2-editor-block-preview {
+        padding: 12px;
+    }
+
+    #wb-builder .wb2-preview-hero {
+        height: 220px;
+    }
+
+    #wb-builder .wb2-preview-copy {
+        padding: 17px;
+    }
+
+    #wb-builder .wb2-preview-grid.three,
+    #wb-builder .wb2-preview-grid.two {
+        grid-template-columns: 1fr;
+    }
+
+    #wb-builder .wb2-preview-gallery img {
+        height: 160px;
+    }
+}
+
+@media (max-width: 420px) {
+    #wb-builder .wb2-category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #wb-builder .wb2-brand {
+        gap: 7px;
+    }
+
+    #wb-builder .wb2-editor-block-head {
+        flex-wrap: wrap;
+    }
+
+    #wb-builder .wb2-editor-block-actions button {
+        width: 27px;
+        height: 27px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #wb-builder *,
+    #wb-builder *::before,
+    #wb-builder *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

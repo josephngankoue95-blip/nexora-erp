@@ -1,0 +1,817 @@
+
+
+========== app\Support\ModuleRegistry.php ==========
+
+<?php
+
+namespace App\Support;
+
+class ModuleRegistry
+{
+    /**
+     * Liste centrale des modules ERP.
+     */
+    public static function all(): array
+    {
+        return [
+
+            /*
+            |--------------------------------------------------------------------------
+            | COMMERCE / GESTION
+            |--------------------------------------------------------------------------
+            */
+
+            'products' => [
+                'name' => 'Produits',
+                'slug' => 'products',
+                'icon' => '📦',
+                'description' => 'Gestion des produits et articles.',
+                'sort_order' => 10,
+                'permissions' => [
+                    'products.view',
+                    'products.create',
+                    'products.edit',
+                    'products.delete',
+                ],
+                'route' => 'company.products.index',
+            ],
+
+            'categories' => [
+                'name' => 'Catégories',
+                'slug' => 'categories',
+                'icon' => '🗂️',
+                'description' => 'Organisation des produits par catégories.',
+                'sort_order' => 20,
+                'permissions' => [
+                    'categories.view',
+                    'categories.create',
+                    'categories.edit',
+                    'categories.delete',
+                ],
+                'route' => 'company.categories.index',
+            ],
+
+            'stock' => [
+                'name' => 'Stock',
+                'slug' => 'stock',
+                'icon' => '🏬',
+                'description' => 'Gestion des stocks, entrées et sorties.',
+                'sort_order' => 30,
+                'permissions' => [
+                    'stock.view',
+                    'stock.entry',
+                    'stock.exit',
+                    'stock.adjust',
+                ],
+                'route' => 'company.stock.index',
+            ],
+
+            'clients' => [
+                'name' => 'Clients',
+                'slug' => 'clients',
+                'icon' => '👥',
+                'description' => 'Gestion des clients et contacts.',
+                'sort_order' => 40,
+                'permissions' => [
+                    'clients.view',
+                    'clients.create',
+                    'clients.edit',
+                    'clients.delete',
+                ],
+                'route' => 'company.clients.index',
+            ],
+
+            'suppliers' => [
+                'name' => 'Fournisseurs',
+                'slug' => 'suppliers',
+                'icon' => '🚚',
+                'description' => 'Gestion des fournisseurs.',
+                'sort_order' => 50,
+                'permissions' => [
+                    'suppliers.view',
+                    'suppliers.create',
+                    'suppliers.edit',
+                    'suppliers.delete',
+                ],
+                'route' => 'company.suppliers.index',
+            ],
+
+            'sales' => [
+                'name' => 'Ventes',
+                'slug' => 'sales',
+                'icon' => '🛒',
+                'description' => 'Gestion des ventes et commandes clients.',
+                'sort_order' => 60,
+                'permissions' => [
+                    'sales.view',
+                    'sales.create',
+                    'sales.cancel',
+                ],
+                'route' => 'company.sales.index',
+            ],
+
+            'purchases' => [
+                'name' => 'Achats',
+                'slug' => 'purchases',
+                'icon' => '🛍️',
+                'description' => 'Gestion des achats et approvisionnements.',
+                'sort_order' => 70,
+                'permissions' => [
+                    'purchases.view',
+                    'purchases.create',
+                    'purchases.cancel',
+                ],
+                'route' => 'company.purchases.index',
+            ],
+
+            'payments' => [
+                'name' => 'Paiements',
+                'slug' => 'payments',
+                'icon' => '💳',
+                'description' => 'Gestion des paiements et moyens de paiement.',
+                'sort_order' => 80,
+                'permissions' => [
+                    'payments.view',
+                    'payments.create',
+                    'payments.cancel',
+                ],
+                'route' => 'company.settings.payments',
+            ],
+
+            'finance' => [
+                'name' => 'Finances',
+                'slug' => 'finance',
+                'icon' => '💰',
+                'description' => 'Suivi financier, encaissements et créances.',
+                'sort_order' => 90,
+                'permissions' => [
+                    'finance.view',
+                ],
+                'route' => 'company.finance.index',
+            ],
+
+            'reports' => [
+                'name' => 'Rapports',
+                'slug' => 'reports',
+                'icon' => '📊',
+                'description' => 'Statistiques, analyses et rapports.',
+                'sort_order' => 100,
+                'permissions' => [
+                    'reports.view',
+                    'reports.export',
+                ],
+                'route' => 'company.reports.index',
+            ],
+
+            'services' => [
+                'name' => 'Prestations',
+                'slug' => 'services',
+                'icon' => '🔧',
+                'description' => 'Gestion des prestations et services.',
+                'sort_order' => 110,
+                'permissions' => [
+                    'services.view',
+                    'services.create',
+                    'services.edit',
+                    'services.delete',
+                ],
+                'route' => 'company.services.index',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | HÔTELLERIE / RESTAURATION
+            |--------------------------------------------------------------------------
+            */
+
+            'hotel' => [
+                'name' => 'Hôtel',
+                'slug' => 'hotel',
+                'icon' => '🏨',
+                'description' => 'Gestion complète d’un établissement hôtelier.',
+                'sort_order' => 200,
+                'permissions' => [
+                    'hotel.view',
+                    'hotel.create',
+                    'hotel.edit',
+                    'hotel.delete',
+                ],
+                'route' => null,
+            ],
+
+            'restaurant' => [
+                'name' => 'Restaurant',
+                'slug' => 'restaurant',
+                'icon' => '🍽️',
+                'description' => 'Gestion des tables, commandes et restauration.',
+                'sort_order' => 210,
+                'permissions' => [
+                    'restaurant.view',
+                    'restaurant.create',
+                    'restaurant.edit',
+                    'restaurant.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | SANTÉ
+            |--------------------------------------------------------------------------
+            */
+
+            'clinic' => [
+                'name' => 'Clinique',
+                'slug' => 'clinic',
+                'icon' => '🏥',
+                'description' => 'Gestion d’une clinique.',
+                'sort_order' => 300,
+                'permissions' => [
+                    'clinic.view',
+                    'clinic.create',
+                    'clinic.edit',
+                    'clinic.delete',
+                ],
+                'route' => null,
+            ],
+
+            'hospital' => [
+                'name' => 'Hôpital',
+                'slug' => 'hospital',
+                'icon' => '🏨',
+                'description' => 'Gestion d’un établissement hospitalier.',
+                'sort_order' => 310,
+                'permissions' => [
+                    'hospital.view',
+                    'hospital.create',
+                    'hospital.edit',
+                    'hospital.delete',
+                ],
+                'route' => null,
+            ],
+
+            'pharmacy' => [
+                'name' => 'Pharmacie',
+                'slug' => 'pharmacy',
+                'icon' => '💊',
+                'description' => 'Gestion d’une pharmacie.',
+                'sort_order' => 320,
+                'permissions' => [
+                    'pharmacy.view',
+                    'pharmacy.create',
+                    'pharmacy.edit',
+                    'pharmacy.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | ÉDUCATION
+            |--------------------------------------------------------------------------
+            */
+
+            'school' => [
+                'name' => 'Établissement scolaire',
+                'slug' => 'school',
+                'icon' => '🎓',
+                'description' => 'Gestion d’une école, collège ou lycée.',
+                'sort_order' => 400,
+                'permissions' => [
+                    'school.view',
+                    'school.create',
+                    'school.edit',
+                    'school.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | DIGITAL / COMMERCE
+            |--------------------------------------------------------------------------
+            */
+
+            'ecommerce' => [
+                    'name' => 'E-commerce',
+
+                    'permissions' => [
+                        'ecommerce.view',
+                        'ecommerce.create',
+                        'ecommerce.edit',
+                        'ecommerce.delete',
+                    ],
+
+                    'route' => 'company.ecommerce.index',
+
+                    'icon' => 'shopping-bag',
+
+                    'sort_order' => 260,
+                ],
+            /*
+            |--------------------------------------------------------------------------
+            | LOCATION
+            |--------------------------------------------------------------------------
+            */
+
+            'vehicle-rental' => [
+                'name' => 'Location de véhicules',
+                'slug' => 'vehicle-rental',
+                'icon' => '🚗',
+                'description' => 'Gestion des véhicules et locations.',
+                'sort_order' => 600,
+                'permissions' => [
+                    'vehicle-rental.view',
+                    'vehicle-rental.create',
+                    'vehicle-rental.edit',
+                    'vehicle-rental.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | IMMOBILIER
+            |--------------------------------------------------------------------------
+            */
+
+            'real-estate' => [
+                'name' => 'Immobilier',
+                'slug' => 'real-estate',
+                'icon' => '🏠',
+                'description' => 'Gestion des biens immobiliers et locations.',
+                'sort_order' => 700,
+                'permissions' => [
+                    'real-estate.view',
+                    'real-estate.create',
+                    'real-estate.edit',
+                    'real-estate.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | RESSOURCES HUMAINES
+            |--------------------------------------------------------------------------
+            */
+
+            'hr' => [
+                'name' => 'Ressources humaines',
+                'slug' => 'hr',
+                'icon' => '👨‍💼',
+                'description' => 'Gestion des employés et ressources humaines.',
+                'sort_order' => 800,
+                'permissions' => [
+                    'hr.view',
+                    'hr.create',
+                    'hr.edit',
+                    'hr.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | PROJETS
+            |--------------------------------------------------------------------------
+            */
+
+            'projects' => [
+                'name' => 'Projets',
+                'slug' => 'projects',
+                'icon' => '📋',
+                'description' => 'Gestion des projets et tâches.',
+                'sort_order' => 900,
+                'permissions' => [
+                    'projects.view',
+                    'projects.create',
+                    'projects.edit',
+                    'projects.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MAINTENANCE
+            |--------------------------------------------------------------------------
+            */
+
+            'maintenance' => [
+                'name' => 'Maintenance',
+                'slug' => 'maintenance',
+                'icon' => '🛠️',
+                'description' => 'Gestion des interventions et maintenance.',
+                'sort_order' => 1000,
+                'permissions' => [
+                    'maintenance.view',
+                    'maintenance.create',
+                    'maintenance.edit',
+                    'maintenance.delete',
+                ],
+                'route' => null,
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | DOCUMENTS
+            |--------------------------------------------------------------------------
+            */
+
+            'documents' => [
+                'name' => 'Documents',
+                'slug' => 'documents',
+                'icon' => '📁',
+                'description' => 'Gestion centralisée des documents.',
+                'sort_order' => 1100,
+                'permissions' => [
+                    'documents.view',
+                    'documents.create',
+                    'documents.edit',
+                    'documents.delete',
+                ],
+                'route' => null,
+            ],
+        ];
+    }
+
+    /**
+     * Récupérer un module par son slug.
+     */
+    public static function get(string $slug): ?array
+    {
+        return self::all()[$slug] ?? null;
+    }
+
+    /**
+     * Vérifier si un module existe.
+     */
+    public static function exists(string $slug): bool
+    {
+        return isset(self::all()[$slug]);
+    }
+
+    /**
+     * Récupérer uniquement les slugs.
+     */
+    public static function slugs(): array
+    {
+        return array_keys(self::all());
+    }
+
+    /**
+     * Récupérer les permissions d'un module.
+     */
+    public static function permissions(string $slug): array
+    {
+        return self::get($slug)['permissions'] ?? [];
+    }
+
+    /**
+     * Récupérer les modules ayant une route.
+     */
+    public static function navigable(): array
+    {
+        return array_filter(
+            self::all(),
+            fn (array $module) => !empty($module['route'])
+        );
+    }
+
+    /**
+     * Récupérer les modules triés.
+     */
+    public static function sorted(): array
+    {
+        $modules = self::all();
+
+        uasort(
+            $modules,
+            fn (array $a, array $b) =>
+                $a['sort_order'] <=> $b['sort_order']
+        );
+
+        return $modules;
+    }
+}
+
+
+========== app\Services\ModulePermissionService.php ==========
+
+<?php
+
+namespace App\Services;
+
+use App\Models\Company;
+use App\Models\User;
+use App\Support\ModuleRegistry;
+
+class ModulePermissionService
+{
+    /**
+     * Vérifie si un module existe dans le registre.
+     */
+    public function moduleExists(string $module): bool
+    {
+        return ModuleRegistry::exists($module);
+    }
+
+    /**
+     * Récupère les permissions déclarées pour un module.
+     */
+    public function permissions(string $module): array
+    {
+        return ModuleRegistry::permissions($module);
+    }
+
+    /**
+     * Vérifie si une permission appartient bien au module.
+     */
+    public function permissionBelongsToModule(
+        string $module,
+        string $permission
+    ): bool {
+        return in_array(
+            $permission,
+            $this->permissions($module),
+            true
+        );
+    }
+
+    /**
+     * Vérifie si le module est activé pour l'entreprise.
+     */
+    public function moduleIsEnabled(
+        ?Company $company,
+        string $module
+    ): bool {
+        if (!$company) {
+            return false;
+        }
+
+        return $company->hasModule($module);
+    }
+
+    /**
+     * Vérifie l'accès complet :
+     *
+     * 1. Le module existe
+     * 2. Le module est activé pour l'entreprise
+     * 3. La permission appartient au module
+     * 4. L'utilisateur possède la permission
+     */
+    public function can(
+        User $user,
+        string $module,
+        string $permission
+    ): bool {
+        if (!$this->moduleExists($module)) {
+            return false;
+        }
+
+        if (!$this->permissionBelongsToModule(
+            $module,
+            $permission
+        )) {
+            return false;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | SUPER ADMIN
+        |--------------------------------------------------------------------------
+        |
+        | Le Super Admin n'est pas limité par les modules d'une entreprise.
+        |
+        */
+
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        $company = $user->company;
+
+        if (!$this->moduleIsEnabled(
+            $company,
+            $module
+        )) {
+            return false;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | PERMISSION EXISTANTE
+        |--------------------------------------------------------------------------
+        |
+        | On conserve ton système actuel.
+        |
+        */
+
+        return $user->hasPermission($permission);
+    }
+
+    /**
+     * Vérifie uniquement l'accès à un module.
+     */
+    public function canAccessModule(
+        User $user,
+        string $module
+    ): bool {
+        if (!$this->moduleExists($module)) {
+            return false;
+        }
+
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        return $this->moduleIsEnabled(
+            $user->company,
+            $module
+        );
+    }
+
+    /**
+     * Récupère les modules accessibles par un utilisateur.
+     */
+    public function accessibleModules(
+        User $user
+    ): array {
+        if ($user->isSuperAdmin()) {
+            return ModuleRegistry::sorted();
+        }
+
+        $company = $user->company;
+
+        if (!$company) {
+            return [];
+        }
+
+        $accessible = [];
+
+        foreach (ModuleRegistry::sorted() as $slug => $module) {
+            if ($this->moduleIsEnabled($company, $slug)) {
+                $accessible[$slug] = $module;
+            }
+        }
+
+        return $accessible;
+    }
+}
+
+
+========== app\Services\CompanyModuleService.php ==========
+
+<?php
+
+namespace App\Services;
+
+use App\Models\Company;
+use Illuminate\Support\Collection;
+
+class CompanyModuleService
+{
+    /**
+     * Retourne les modules actifs d'une entreprise.
+     */
+    public function getActiveModules(?Company $company): Collection
+    {
+        if (!$company) {
+            return collect();
+        }
+
+        return $company->activeModules()
+            ->get();
+    }
+
+    /**
+     * Retourne uniquement les slugs des modules actifs.
+     */
+    public function getActiveModuleSlugs(?Company $company): array
+    {
+        if (!$company) {
+            return [];
+        }
+
+        return $company->activeModules()
+            ->pluck('slug')
+            ->toArray();
+    }
+
+    /**
+     * Vérifie si un module est actif.
+     */
+    public function isEnabled(
+        ?Company $company,
+        string $slug
+    ): bool {
+        if (!$company) {
+            return false;
+        }
+
+        return in_array(
+            $slug,
+            $this->getActiveModuleSlugs($company),
+            true
+        );
+    }
+}
+
+
+========== app\Models\Module.php ==========
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Module extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'icon',
+        'is_active',
+        'sort_order',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    /**
+     * Entreprises possédant ce module.
+     */
+    public function companies(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Company::class,
+            'company_modules'
+        )
+            ->withPivot([
+                'is_active',
+                'activated_at',
+                'deactivated_at',
+            ])
+            ->withTimestamps();
+    }
+}
+
+
+========== app\Models\CompanyModule.php ==========
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class CompanyModule extends Model
+{
+    use HasFactory;
+
+    protected $table = 'company_modules';
+
+    protected $fillable = [
+        'company_id',
+        'module_id',
+        'is_active',
+        'activated_at',
+        'deactivated_at',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'activated_at' => 'datetime',
+        'deactivated_at' => 'datetime',
+    ];
+
+    /**
+     * Entreprise.
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(
+            Company::class
+        );
+    }
+
+    /**
+     * Module.
+     */
+    public function module(): BelongsTo
+    {
+        return $this->belongsTo(
+            Module::class
+        );
+    }
+}

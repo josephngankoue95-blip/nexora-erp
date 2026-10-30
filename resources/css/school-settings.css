@@ -1,0 +1,310 @@
+
+/* ============================================================
+   ERP GESTION — PARAMÈTRES SCOLAIRES
+   ============================================================ */
+
+.school-settings-page {
+    --ss-primary: #2563eb;
+    --ss-primary-dark: #1d4ed8;
+    --ss-text: #17233c;
+    --ss-muted: #64748b;
+    --ss-border: #e2e8f0;
+    --ss-bg: #f8fafc;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 22px;
+    color: var(--ss-text);
+}
+
+.school-settings-page *,
+.school-settings-page *::before,
+.school-settings-page *::after {
+    box-sizing: border-box;
+}
+
+.ss-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.ss-eyebrow {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--ss-primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.ss-intro h2 {
+    margin: 0 0 8px;
+    font-size: clamp(21px, 2.5vw, 29px);
+    font-weight: 800;
+}
+
+.ss-intro p,
+.ss-panel-heading p {
+    margin: 0;
+    color: var(--ss-muted);
+    line-height: 1.6;
+}
+
+.ss-company {
+    padding: 10px 15px;
+    border: 1px solid var(--ss-border);
+    border-radius: 12px;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ss-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.ss-panel {
+    min-width: 0;
+    padding: 25px;
+    border: 1px solid var(--ss-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, .035);
+}
+
+.ss-panel-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 25px;
+    padding-bottom: 19px;
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.ss-step {
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #eff6ff;
+    color: var(--ss-primary);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.ss-panel-heading h3 {
+    margin: 0 0 5px;
+    font-size: 17px;
+}
+
+.ss-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.ss-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 8px;
+}
+
+.ss-field > span {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.ss-wide {
+    grid-column: 1 / -1;
+}
+
+.ss-field input,
+.ss-field select,
+.ss-field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    color: var(--ss-text);
+    font: inherit;
+    font-size: 14px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.ss-field input:focus,
+.ss-field select:focus,
+.ss-field textarea:focus {
+    border-color: var(--ss-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .1);
+}
+
+.ss-field textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.ss-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    background: var(--ss-bg);
+}
+
+.ss-upload strong {
+    font-size: 14px;
+}
+
+.ss-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 160px;
+    overflow: hidden;
+    border: 1px solid var(--ss-border);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.ss-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: 145px;
+    object-fit: contain;
+}
+
+.ss-preview img[hidden] {
+    display: none;
+}
+
+.ss-upload input[type="file"] {
+    width: 100%;
+    max-width: 100%;
+    font-size: 12px;
+}
+
+.ss-upload small {
+    color: var(--ss-muted);
+    font-size: 12px;
+}
+
+.ss-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px 0;
+}
+
+.ss-actions span {
+    color: var(--ss-muted);
+    font-size: 12px;
+}
+
+.ss-submit {
+    padding: 13px 24px;
+    border: 0;
+    border-radius: 11px;
+    background: var(--ss-primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.ss-submit:hover {
+    background: var(--ss-primary-dark);
+}
+
+.ss-alert {
+    margin-bottom: 20px;
+    padding: 15px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.ss-success {
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.ss-error {
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.ss-alert ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+    .school-settings-page {
+        padding: 14px;
+    }
+
+    .ss-intro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ss-panel {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .ss-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .ss-wide {
+        grid-column: auto;
+    }
+
+    .ss-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .ss-submit {
+        width: 100%;
+    }
+}
+
+@media (max-width: 420px) {
+    .school-settings-page {
+        padding: 10px;
+    }
+
+    .ss-panel {
+        padding: 14px;
+    }
+
+    .ss-panel-heading {
+        gap: 10px;
+    }
+
+    .ss-panel-heading h3 {
+        font-size: 15px;
+    }
+}

@@ -1,0 +1,53 @@
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css',
+                'resources/css/superadmin-dashboard.css',
+                'resources/css/storefront.css',
+                'resources/js/app.js',
+                'resources/js/storefront.js',
+                'resources/css/superadmin-users.css',
+                'resources/css/superadmin-subscriptions.css',
+                'resources/css/superadmin-subscription-plans.css',
+                'resources/css/superadmin-payments.css',
+                'resources/css/website-public.css',
+                'resources/css/website-editor.css',
+                'resources/js/website-editor.js',
+                'resources/css/website-media.css',
+                'resources/css/website-media-picker.css',
+                'resources/css/website-buttons.css',
+                'resources/css/website-settings.css',
+                'resources/css/website-builder-public.css',
+                'resources/css/website-builder.css',
+                'resources/js/website-builder.js',
+                'resources/js/website-builder-public.js',
+                'resources/css/ecommerce-store-settings.css',
+                'resources/css/superadmin-settings.css',
+                'resources/css/school-class-subjects.css',
+                'resources/css/school-grades.css',
+                'resources/css/school-cards.css',
+                'resources/css/school-honors.css',
+                'resources/css/school-councils.css',
+                'resources/css/school-timetables.css',
+                'resources/css/school-settings.css',
+                'resources/js/school-settings.js',
+                'resources/css/school-documents.css',
+                'resources/css/school-attendance.css',
+                'resources/js/school-attendance.js',
+                'resources/css/school-attendance-justifications.css',
+                'resources/css/school-attendance-reports.css',
+                'resources/css/school-principal.css',
+                'resources/js/school-principal.js',
+                'resources/css/medical-dashboard.css',
+                'resources/js/medical-dashboard.js',
+                'resources/css/medical-patients.css',
+                'resources/js/medical-patients.js'
+            ],
+                
+            refresh: true,
+        }),
+    ],
+});

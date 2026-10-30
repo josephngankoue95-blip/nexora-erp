@@ -1,0 +1,79 @@
+
+.school-document-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #17233c;
+    color: #17233c;
+}
+
+.school-document-logo {
+    width: 95px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.school-document-logo img {
+    max-width: 90px;
+    max-height: 90px;
+    object-fit: contain;
+}
+
+.school-document-identity {
+    flex: 1;
+    text-align: center;
+}
+
+.school-document-identity h2 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.school-document-identity p {
+    margin: 3px 0;
+    font-size: 11px;
+}
+
+.school-document-motto {
+    font-style: italic;
+    font-weight: 600;
+}
+
+.school-document-signatures {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.school-document-signature {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+}
+
+.school-document-signature strong {
+    display: block;
+    margin-bottom: 50px;
+}
+
+.school-document-stamp {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+@media print {
+    .school-document-header {
+        break-inside: avoid;
+    }
+
+    .school-document-signatures {
+        break-inside: avoid;
+    }
+}

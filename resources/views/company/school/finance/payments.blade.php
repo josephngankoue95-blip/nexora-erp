@@ -1,0 +1,7 @@
+@extends('layouts.school')
+@section('title','Historique des paiements')
+@section('page-title','Historique des paiements')
+@section('content')
+@include('company.school.finance.styles')
+<div class="sf-page"><div class="sf-heading"><div><h2>Historique des versements</h2><p>Reçus PDF et opérations enregistrées</p></div><a class="sf-btn" href="{{ route('company.school.tuition.index') }}">Retour</a></div><div class="sf-panel"><div class="sf-scroll"><table class="sf-table"><thead><tr><th>Date</th><th>Référence</th><th>Élève</th><th>Rubrique</th><th>Montant</th><th>Mode</th><th>Reçu</th></tr></thead><tbody>@forelse($payments as $payment)<tr><td>{{ $payment->paid_on?->format('d/m/Y') }}</td><td>{{ $payment->reference }}</td><td>{{ $payment->studentFee?->enrollment?->student?->last_name }} {{ $payment->studentFee?->enrollment?->student?->first_name }}</td><td>{{ ['registration_fee'=>'Inscription','installment_1'=>'Tranche 1','installment_2'=>'Tranche 2','installment_3'=>'Tranche 3'][$payment->fee_type] ?? $payment->fee_type }}</td><td>{{ number_format($payment->amount,0,',',' ') }} FCFA</td><td>{{ $payment->method }}</td><td><a class="sf-btn" target="_blank" rel="noopener" href="{{ route('company.school.tuition.receipt',$payment->id) }}">PDF</a></td></tr>@empty<tr><td colspan="7">Aucun versement enregistré.</td></tr>@endforelse</tbody></table></div><div style="margin-top:15px">{{ $payments->links() }}</div></div></div>
+@endsection

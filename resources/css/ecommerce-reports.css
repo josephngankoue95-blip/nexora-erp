@@ -1,0 +1,473 @@
+
+/* ============================================================
+   ERP SAAS — RAPPORTS E-COMMERCE
+   CSS NATIF — RESPONSIVE
+============================================================ */
+
+.ecommerce-reports-page {
+    --reports-primary: #2563eb;
+    --reports-text: #172033;
+    --reports-muted: #64748b;
+    --reports-border: #e2e8f0;
+    --reports-bg: #f8fafc;
+
+    color: var(--reports-text);
+    width: 100%;
+    min-width: 0;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.ecommerce-reports-page *,
+.ecommerce-reports-page *::before,
+.ecommerce-reports-page *::after {
+    box-sizing: border-box;
+}
+
+/* HEADER */
+
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.reports-header h1 {
+    margin: 0 0 7px;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.reports-header p,
+.reports-section-heading p {
+    margin: 0;
+    color: var(--reports-muted);
+    font-size: 14px;
+}
+
+.reports-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reports-filter label {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.reports-filter select {
+    padding: 11px 14px;
+    border: 1px solid var(--reports-border);
+    border-radius: 10px;
+    background: #fff;
+    font: inherit;
+    min-width: 170px;
+    cursor: pointer;
+}
+
+.reports-period-info {
+    color: var(--reports-muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+/* STATISTIQUES */
+
+.reports-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.reports-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid var(--reports-border);
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, .035);
+    min-width: 0;
+}
+
+.reports-stat-icon {
+    font-size: 25px;
+}
+
+.reports-stat-label {
+    font-size: 13px;
+    color: var(--reports-muted);
+    font-weight: 600;
+}
+
+.reports-stat-card strong {
+    font-size: clamp(18px, 1.6vw, 25px);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.reports-stat-card small {
+    color: var(--reports-muted);
+    font-size: 12px;
+}
+
+/* SECTIONS */
+
+.reports-section {
+    min-width: 0;
+    background: #fff;
+    border: 1px solid var(--reports-border);
+    border-radius: 15px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, .025);
+}
+
+.reports-section-heading {
+    margin-bottom: 22px;
+}
+
+.reports-section-heading h2 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 750;
+}
+
+/* STATUTS */
+
+.reports-status-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.reports-status-card {
+    padding: 18px 14px;
+    background: var(--reports-bg);
+    border: 1px solid var(--reports-border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reports-status-card span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--reports-muted);
+}
+
+.reports-status-card strong {
+    font-size: 27px;
+}
+
+.reports-status-card.status-pending {
+    background: #fffbeb;
+}
+
+.reports-status-card.status-confirmed {
+    background: #eff6ff;
+}
+
+.reports-status-card.status-preparing {
+    background: #f5f3ff;
+}
+
+.reports-status-card.status-shipped {
+    background: #ecfeff;
+}
+
+.reports-status-card.status-delivered {
+    background: #f0fdf4;
+}
+
+.reports-status-card.status-cancelled {
+    background: #fef2f2;
+}
+
+/* FINANCES */
+
+.reports-financial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.reports-financial-item {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 17px;
+    border-radius: 12px;
+    background: var(--reports-bg);
+    border: 1px solid var(--reports-border);
+}
+
+.reports-financial-item span {
+    color: var(--reports-muted);
+    font-size: 13px;
+}
+
+.reports-financial-item strong {
+    font-size: 18px;
+    overflow-wrap: anywhere;
+}
+
+/* GRAPHIQUE */
+
+.reports-chart {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 20px 4px 10px;
+    min-height: 270px;
+}
+
+.reports-chart-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    flex: 1 0 65px;
+    min-width: 65px;
+}
+
+.reports-chart-value {
+    font-size: 11px;
+    color: var(--reports-muted);
+    white-space: nowrap;
+}
+
+.reports-chart-track {
+    height: 180px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-bottom: 1px solid var(--reports-border);
+}
+
+.reports-chart-bar {
+    width: 55%;
+    max-width: 50px;
+    background: linear-gradient(180deg, #60a5fa, #2563eb);
+    border-radius: 7px 7px 0 0;
+    min-height: 3px;
+    transition: height .25s ease;
+}
+
+.reports-chart-label {
+    font-size: 11px;
+    color: var(--reports-muted);
+    white-space: nowrap;
+}
+
+.reports-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--reports-muted);
+    background: var(--reports-bg);
+    border-radius: 10px;
+}
+
+/* TABLEAUX */
+
+.reports-two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.reports-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+}
+
+.reports-table th,
+.reports-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--reports-border);
+    vertical-align: middle;
+}
+
+.reports-table th {
+    background: var(--reports-bg);
+    font-weight: 700;
+    color: #475569;
+    white-space: nowrap;
+}
+
+.reports-table td strong {
+    display: block;
+    font-weight: 700;
+}
+
+.reports-table td small {
+    display: block;
+    margin-top: 5px;
+    color: var(--reports-muted);
+}
+
+.reports-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.reports-empty-cell {
+    text-align: center;
+    color: var(--reports-muted);
+    padding: 28px !important;
+}
+
+.reports-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.reports-badge.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.reports-badge.status-confirmed,
+.reports-badge.status-shipped {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.reports-badge.status-delivered {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.reports-badge.status-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+    .reports-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .reports-status-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 850px) {
+    .reports-two-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .reports-financial-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .ecommerce-reports-page {
+        padding: 14px;
+    }
+
+    .reports-header h1 {
+        font-size: 22px;
+    }
+
+    .reports-filter {
+        width: 100%;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .reports-filter select {
+        width: 100%;
+    }
+
+    .reports-stats-grid,
+    .reports-financial-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reports-status-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .reports-section {
+        padding: 15px;
+    }
+}
+
+
+/* EXPORTS RAPPORTS */
+
+.reports-export-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.reports-export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 16px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.reports-export-btn:hover {
+    transform: translateY(-1px);
+    color: #ffffff;
+}
+
+.reports-export-pdf {
+    background: #dc2626;
+}
+
+.reports-export-pdf:hover {
+    background: #b91c1c;
+}
+
+.reports-export-excel {
+    background: #16a34a;
+}
+
+.reports-export-excel:hover {
+    background: #15803d;
+}
+
+@media (max-width: 600px) {
+    .reports-export-actions {
+        width: 100%;
+    }
+
+    .reports-export-btn {
+        flex: 1;
+    }
+}

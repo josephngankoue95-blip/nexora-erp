@@ -1,0 +1,10 @@
+@extends('layouts.school')
+@section('title',$fee->exists?'Modifier un tarif':'Nouveau tarif')
+@section('page-title','Tarifs scolaires')
+@section('content')
+@include('company.school.finance.styles')
+<div class="sf-page sf-form"><div class="sf-heading"><div><h2>{{ $fee->exists?'Modifier le tarif':'Créer un tarif scolaire' }}</h2><p>Montants en FCFA, sans décimales.</p></div><a class="sf-btn" href="{{ route('company.school.fees.index') }}">← Retour</a></div>
+<form method="POST" action="{{ $fee->exists?route('company.school.fees.update',$fee->id):route('company.school.fees.store') }}">@csrf @if($fee->exists) @method('PUT') @endif
+<div class="sf-panel"><h3>Année scolaire et niveau</h3><div class="sf-grid"><label class="sf-field"><span>Année scolaire *</span><select required name="school_year_id"><option value="">Sélectionner</option>@foreach($years as $year)<option value="{{ $year->id }}" @selected(old('school_year_id',$fee->school_year_id)==$year->id)>{{ $year->name }}</option>@endforeach</select></label><label class="sf-field"><span>Niveau *</span><select required name="school_level_id"><option value="">Sélectionner</option>@foreach($levels as $level)<option value="{{ $level->id }}" @selected(old('school_level_id',$fee->school_level_id)==$level->id)>{{ $level->section?->name }} — {{ $level->name }}</option>@endforeach</select></label></div></div>
+<div class="sf-panel"><h3>Répartition des frais</h3><div class="sf-grid">@foreach(['registration_fee'=>'Frais d’inscription','installment_1'=>'Première tranche','installment_2'=>'Deuxième tranche','installment_3'=>'Troisième tranche'] as $key=>$label)<label class="sf-field"><span>{{ $label }} (FCFA) *</span><input required type="number" min="0" max="1000000000" step="1" name="{{ $key }}" value="{{ old($key,$fee->$key ?? 0) }}"></label>@endforeach</div><div class="sf-actions"><button class="sf-btn sf-btn-primary">{{ $fee->exists?'Enregistrer les modifications':'Créer le tarif' }}</button><a class="sf-btn" href="{{ route('company.school.fees.index') }}">Annuler</a></div></div></form></div>
+@endsection

@@ -1,0 +1,149 @@
+
+@extends('layouts.ecommerce')
+
+@section('title', 'Modifier une catégorie')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/ecommerce-categories.css') }}">
+@endpush
+
+@section('content')
+
+<div class="ec-category-page">
+
+    <div class="ec-category-header">
+        <div>
+            <h1>Modifier la catégorie</h1>
+            <p>{{ $category->name }}</p>
+        </div>
+
+        <a href="{{ route('company.ecommerce.categories.index') }}"
+           class="ec-btn ec-btn-secondary">
+            ← Retour
+        </a>
+    </div>
+
+    <form action="{{ route('company.ecommerce.categories.update', $category->id) }}"
+          method="POST"
+          enctype="multipart/form-data"
+          class="ec-form">
+
+        @csrf
+        @method('PUT')
+
+        <div class="ec-panel">
+            <h2>Informations de la catégorie</h2>
+
+            <div class="ec-form-grid">
+
+                <div class="ec-field">
+                    <label for="name">Nom *</label>
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           class="ec-input"
+                           value="{{ old('name', $category->name) }}"
+                           maxlength="255"
+                           required>
+                    @error('name')
+                        <small class="ec-field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ec-field">
+                    <label for="parent_id">Catégorie parente</label>
+                    <select name="parent_id"
+                            id="parent_id"
+                            class="ec-input">
+                        <option value="">Catégorie principale</option>
+
+                        @foreach($parents as $parent)
+                            <option value="{{ $parent->id }}"
+                                {{ old('parent_id', $category->parent_id) == $parent->id ? 'selected' : '' }}>
+                                {{ $parent->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('parent_id')
+                        <small class="ec-field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ec-field ec-field-full">
+                    <label for="description">Description</label>
+                    <textarea name="description"
+                              id="description"
+                              class="ec-input ec-textarea"
+                              rows="5"
+                              maxlength="5000">{{ old('description', $category->description) }}</textarea>
+                    @error('description')
+                        <small class="ec-field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ec-field">
+                    <label for="sort_order">Ordre d'affichage</label>
+                    <input type="number"
+                           name="sort_order"
+                           id="sort_order"
+                           class="ec-input"
+                           min="0"
+                           value="{{ old('sort_order', $category->sort_order) }}">
+                    @error('sort_order')
+                        <small class="ec-field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ec-field">
+                    <label for="image">Nouvelle image</label>
+
+                    @if($category->image)
+                        <div class="ec-image-preview">
+                            <img src="{{ asset('storage/' . $category->image) }}"
+                                 alt="{{ $category->name }}">
+                        </div>
+                    @endif
+
+                    <input type="file"
+                           name="image"
+                           id="image"
+                           class="ec-input"
+                           accept="image/jpeg,image/png,image/webp">
+
+                    <small>Laissez vide pour conserver l'image actuelle.</small>
+
+                    @error('image')
+                        <small class="ec-field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ec-field ec-field-full">
+                    <label class="ec-check-label">
+                        <input type="hidden" name="is_active" value="0">
+                        <input type="checkbox"
+                               name="is_active"
+                               value="1"
+                               {{ old('is_active', $category->is_active) ? 'checked' : '' }}>
+                        Catégorie active
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="ec-form-actions">
+            <a href="{{ route('company.ecommerce.categories.index') }}"
+               class="ec-btn ec-btn-secondary">
+                Annuler
+            </a>
+
+            <button type="submit" class="ec-btn ec-btn-primary">
+                Enregistrer les modifications
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+@endsection

@@ -1,0 +1,571 @@
+
+/* ================================================================
+   ERP SAAS — E-COMMERCE
+   PARAMÈTRES BOUTIQUE
+   CSS NATIF — RESPONSIVE
+================================================================ */
+
+.store-settings-page {
+    --settings-primary: #2563eb;
+    --settings-primary-dark: #1d4ed8;
+    --settings-primary-light: #eff6ff;
+
+    --settings-text: #0f172a;
+    --settings-muted: #64748b;
+    --settings-border: #e2e8f0;
+    --settings-background: #f8fafc;
+    --settings-white: #ffffff;
+
+    --settings-green: #16a34a;
+    --settings-red: #dc2626;
+
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 28px;
+    color: var(--settings-text);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.store-settings-page *,
+.store-settings-page *::before,
+.store-settings-page *::after {
+    box-sizing: border-box;
+}
+
+/* ================================================================
+   EN-TÊTE
+================================================================ */
+
+.store-settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.store-settings-eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--settings-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.store-settings-header h1 {
+    margin: 0 0 10px;
+    color: var(--settings-text);
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.store-settings-header p {
+    margin: 0;
+    color: var(--settings-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.store-settings-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: var(--settings-primary-light);
+    color: var(--settings-primary);
+    font-size: 30px;
+}
+
+/* ================================================================
+   ALERTES
+================================================================ */
+
+.store-settings-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px;
+    margin-bottom: 22px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.store-settings-alert.success {
+    color: #166534;
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.store-settings-alert.error {
+    display: block;
+    color: #991b1b;
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.store-settings-alert ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+
+/* ================================================================
+   FORMULAIRE
+================================================================ */
+
+.store-settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* ================================================================
+   CARTES
+================================================================ */
+
+.store-settings-card {
+    padding: 28px;
+    background: var(--settings-white);
+    border: 1px solid var(--settings-border);
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.store-settings-card-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--settings-border);
+}
+
+.store-settings-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: var(--settings-primary-light);
+    color: var(--settings-primary);
+    font-size: 21px;
+}
+
+.store-settings-card-heading h2 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 750;
+    line-height: 1.4;
+}
+
+.store-settings-card-heading p {
+    margin: 0;
+    color: var(--settings-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ================================================================
+   GRILLE DES CHAMPS
+================================================================ */
+
+.store-settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.store-settings-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.store-settings-field.full {
+    grid-column: 1 / -1;
+}
+
+.store-settings-field label {
+    margin-bottom: 9px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.store-settings-field .required {
+    color: var(--settings-red);
+}
+
+.store-settings-field input,
+.store-settings-field select,
+.store-settings-field textarea {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    color: var(--settings-text);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.store-settings-field textarea {
+    min-height: 115px;
+    resize: vertical;
+}
+
+.store-settings-field input::placeholder,
+.store-settings-field textarea::placeholder {
+    color: #94a3b8;
+}
+
+.store-settings-field input:hover,
+.store-settings-field select:hover,
+.store-settings-field textarea:hover {
+    border-color: #94a3b8;
+}
+
+.store-settings-field input:focus,
+.store-settings-field select:focus,
+.store-settings-field textarea:focus {
+    border-color: var(--settings-primary);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.store-settings-field select {
+    cursor: pointer;
+}
+
+.store-settings-field .field-help {
+    margin-top: 7px;
+    color: var(--settings-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.store-settings-field .field-error {
+    margin-top: 7px;
+    color: var(--settings-red);
+    font-size: 12px;
+}
+
+/* ================================================================
+   OPTIONS DE FONCTIONNEMENT
+================================================================ */
+
+.store-settings-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.store-settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 0;
+    cursor: pointer;
+}
+
+.store-settings-option:first-child {
+    padding-top: 0;
+}
+
+.store-settings-option:last-child {
+    padding-bottom: 0;
+}
+
+.store-settings-option + .store-settings-option {
+    border-top: 1px solid var(--settings-border);
+}
+
+.store-settings-option-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.store-settings-option-info strong {
+    color: var(--settings-text);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.store-settings-option-info small {
+    color: var(--settings-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ================================================================
+   INTERRUPTEURS PERSONNALISÉS
+================================================================ */
+
+.store-settings-switch {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 27px;
+}
+
+.store-settings-switch input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.store-settings-switch-slider {
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    background: #cbd5e1;
+    pointer-events: none;
+    transition: background 0.25s ease;
+}
+
+.store-settings-switch-slider::before {
+    position: absolute;
+    content: "";
+    left: 4px;
+    bottom: 4px;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    transition: transform 0.25s ease;
+}
+
+.store-settings-switch input:checked
+    + .store-settings-switch-slider {
+    background: var(--settings-primary);
+}
+
+.store-settings-switch input:checked
+    + .store-settings-switch-slider::before {
+    transform: translateX(21px);
+}
+
+.store-settings-switch input:focus-visible
+    + .store-settings-switch-slider {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 3px;
+}
+
+/* ================================================================
+   BARRE D'ACTIONS
+================================================================ */
+
+.store-settings-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 26px;
+    background: var(--settings-white);
+    border: 1px solid var(--settings-border);
+    border-radius: 16px;
+}
+
+.store-settings-actions p {
+    margin: 0;
+    color: var(--settings-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.store-settings-save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: var(--settings-primary);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.store-settings-save:hover {
+    background: var(--settings-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.18);
+}
+
+.store-settings-save:active {
+    transform: translateY(0);
+}
+
+.store-settings-save:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 3px;
+}
+
+/* ================================================================
+   TABLETTES
+================================================================ */
+
+@media (max-width: 991px) {
+    .store-settings-page {
+        padding: 22px;
+    }
+
+    .store-settings-card {
+        padding: 24px;
+    }
+
+    .store-settings-header h1 {
+        font-size: 25px;
+    }
+}
+
+/* ================================================================
+   MOBILES
+================================================================ */
+
+@media (max-width: 767px) {
+    .store-settings-page {
+        padding: 16px;
+    }
+
+    .store-settings-header {
+        align-items: flex-start;
+        margin-bottom: 22px;
+    }
+
+    .store-settings-header h1 {
+        font-size: 23px;
+    }
+
+    .store-settings-header-icon {
+        flex-basis: 48px;
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+        font-size: 23px;
+    }
+
+    .store-settings-card {
+        padding: 20px;
+        border-radius: 14px;
+    }
+
+    .store-settings-card-heading {
+        gap: 12px;
+        padding-bottom: 18px;
+        margin-bottom: 20px;
+    }
+
+    .store-settings-section-icon {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .store-settings-card-heading h2 {
+        font-size: 15px;
+    }
+
+    .store-settings-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .store-settings-field.full {
+        grid-column: auto;
+    }
+
+    .store-settings-actions {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .store-settings-save {
+        width: 100%;
+    }
+}
+
+@media (max-width: 420px) {
+    .store-settings-page {
+        padding: 12px;
+    }
+
+    .store-settings-header-icon {
+        display: none;
+    }
+
+    .store-settings-card {
+        padding: 16px;
+    }
+
+    .store-settings-option {
+        gap: 12px;
+    }
+
+    .store-settings-option-info strong {
+        font-size: 13px;
+    }
+}
+
+/* ================================================================
+   ACCESSIBILITÉ
+================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .store-settings-page *,
+    .store-settings-page *::before,
+    .store-settings-page *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+.store-public-link { margin-top: 24px; }
+.store-public-status { font-size: 13px; font-weight: 700; margin: 14px 0 20px; }
+.store-public-status.active { color: #15803d; }
+.store-public-status.inactive { color: #b45309; }
+.store-public-link input[readonly] { width: 100%; background: #f8fafc; color: #334155; cursor: text; }
+.store-public-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.store-public-button { border: 0; border-radius: 10px; padding: 12px 17px; font: inherit; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; cursor: pointer; }
+.store-public-button.primary { background: #2563eb; color: #fff; }
+.store-public-button.secondary { background: #eff6ff; color: #1d4ed8; }
+.store-public-button.whatsapp { background: #dcfce7; color: #15803d; }
+.store-public-feedback { font-size: 13px; color: #15803d; margin-top: 12px; }
+@media (max-width: 600px) { .store-public-actions { flex-direction: column; } .store-public-button { width: 100%; } }

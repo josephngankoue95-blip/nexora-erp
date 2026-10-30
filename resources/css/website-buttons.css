@@ -1,0 +1,17 @@
+/* Boutons du site : charger également ce CSS sur les pages publiques. */
+.ws-site-button { display:inline-block; margin:8px 6px 8px 0; padding:11px 18px; border-radius:9px; font-weight:600; text-decoration:none; line-height:1.4; transition:filter .2s; }
+.ws-site-button-primary { background:#2563eb; color:#fff !important; border:2px solid #2563eb; }
+.ws-site-button-outline { background:transparent; color:#2563eb !important; border:2px solid #2563eb; }
+.ws-site-button:hover { filter:brightness(.9); }
+.ws-button-modal[hidden] { display:none !important; }
+.ws-button-modal { position:fixed; inset:0; z-index:10001; background:rgba(15,23,42,.7); display:flex; justify-content:center; align-items:center; padding:16px; }
+.ws-button-dialog { background:#fff; color:#172033; border-radius:15px; padding:22px; width:min(510px,100%); max-height:90vh; overflow:auto; }
+.ws-button-heading { display:flex; justify-content:space-between; gap:12px; align-items:center; }
+.ws-button-heading h2 { font-size:19px; margin:0 0 14px; }
+.ws-button-heading button { border:0; background:#f1f5f9; padding:9px 13px; border-radius:8px; cursor:pointer; }
+.ws-button-dialog form { display:grid; gap:13px; }
+.ws-button-dialog label { display:grid; gap:5px; font-weight:600; font-size:14px; }
+.ws-button-dialog input,.ws-button-dialog select { width:100%; min-width:0; padding:10px; border:1px solid #cbd5e1; border-radius:8px; background:#fff; color:#172033; }
+.ws-button-hint { font-size:12px; color:#64748b; margin:0; }
+.ws-button-error { color:#b91c1c; font-size:13px; margin:0; }
+.ws-button-submit { border:0; background:#2563eb; color:#fff; padding:12px; border-radius:9px; font-weight:600; cursor:pointer; }

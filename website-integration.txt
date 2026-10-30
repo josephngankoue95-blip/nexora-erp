@@ -1,0 +1,2154 @@
+
+
+========== routes/web.php ==========
+
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
+use App\Http\Controllers\ProfileController;
+
+/*
+|--------------------------------------------------------------------------
+| SUPER ADMIN
+|--------------------------------------------------------------------------
+*/
+
+use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\SuperAdmin\CompanyController;
+use App\Http\Controllers\SuperAdmin\UserController as SuperAdminUserController;
+use App\Http\Controllers\SuperAdmin\SubscriptionController;
+use App\Http\Controllers\SuperAdmin\SubscriptionPlanController;
+use App\Http\Controllers\SuperAdmin\PaymentController;
+use App\Http\Controllers\SuperAdmin\PlatformSettingController;
+use App\Http\Controllers\SuperAdmin\ModuleController;
+
+
+/*
+|--------------------------------------------------------------------------
+| COMPANY
+|--------------------------------------------------------------------------
+*/
+
+use App\Http\Controllers\CompanyAdmin\DashboardController as CompanyDashboardController;
+use App\Http\Controllers\CompanyAdmin\CategoryController;
+use App\Http\Controllers\CompanyAdmin\ProductController;
+use App\Http\Controllers\CompanyAdmin\StockController;
+use App\Http\Controllers\CompanyAdmin\ClientController;
+use App\Http\Controllers\CompanyAdmin\SupplierController;
+use App\Http\Controllers\CompanyAdmin\SaleController;
+use App\Http\Controllers\CompanyAdmin\SalePaymentController;
+use App\Http\Controllers\CompanyAdmin\PaymentSettingController;
+use App\Http\Controllers\CompanyAdmin\FinanceController;
+use App\Http\Controllers\CompanyAdmin\ReportController;
+use App\Http\Controllers\CompanyAdmin\ReportExportController;
+use App\Http\Controllers\CompanyAdmin\PurchaseController;
+use App\Http\Controllers\CompanyAdmin\PurchasePaymentController;
+use App\Http\Controllers\CompanyAdmin\UserController;
+use App\Http\Controllers\CompanyAdmin\UserPermissionController;
+use App\Http\Controllers\CompanyAdmin\SettingController;
+use App\Http\Controllers\CompanyAdmin\ServiceController;
+use App\Http\Controllers\CompanyAdmin\EcommerceController;
+use App\Http\Controllers\CompanyAdmin\ModuleLauncherController;
+
+use App\Http\Controllers\PaymentWebhookController;
+
+
+/*
+|--------------------------------------------------------------------------
+| PAGE D'ACCUEIL
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | UTILISATEUR NON CONNECTÉ
+    |--------------------------------------------------------------------------
+    */
+
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+
+    $user = auth()->user();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SUPER ADMIN
+    |--------------------------------------------------------------------------
+    */
+
+    if ($user->isSuperAdmin()) {
+
+        return redirect()
+            ->route('superadmin.dashboard');
+
+    }
+
+
+    /*
+|--------------------------------------------------------------------------
+| UTILISATEURS ENTREPRISE
+|--------------------------------------------------------------------------
+*/
+
+$companyRoles = [
+
+    'companyadmin',
+    'manager',
+    'seller',
+    'cashier',
+    'stock_manager',
+    'accountant',
+    'employee',
+
+];
+
+
+if (
+    in_array(
+        $user->role,
+        $companyRoles,
+        true
+    )
+) {
+
+    return redirect()
+        ->route('company.modules.index');
+
+}
+
+    /*
+    |--------------------------------------------------------------------------
+    | RÔLE INVALIDE
+    |--------------------------------------------------------------------------
+    */
+
+    auth()->logout();
+
+
+    return redirect()
+        ->route('login')
+        ->withErrors([
+
+            'email' =>
+                'Votre compte ne possède aucun rôle valide.',
+
+        ]);
+
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| ESPACE SUPER ADMIN
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware([
+    'auth',
+    'superadmin',
+])
+    ->prefix('superadmin')
+    ->name('superadmin.')
+    ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DASHBOARD
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/dashboard',
+            [
+                DashboardController::class,
+                'index',
+            ]
+        )->name('dashboard');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ENTREPRISES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'companies',
+            CompanyController::class
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ACTIVER / DÉSACTIVER UNE ENTREPRISE
+        |--------------------------------------------------------------------------
+        */
+
+        Route::patch(
+            '/companies/{company}/toggle-status',
+            [
+                CompanyController::class,
+                'toggleStatus',
+            ]
+        )->name('companies.toggle-status');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULES D'UNE ENTREPRISE
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/companies/{company}/modules',
+            [
+                ModuleController::class,
+                'edit',
+            ]
+        )->name('companies.modules.edit');
+
+
+        Route::put(
+            '/companies/{company}/modules',
+            [
+                ModuleController::class,
+                'update',
+            ]
+        )->name('companies.modules.update');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | UTILISATEURS SUPER ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/users',
+            [
+                SuperAdminUserController::class,
+                'index',
+            ]
+        )->name('users.index');
+
+
+        Route::get(
+            '/users/create',
+            [
+                SuperAdminUserController::class,
+                'create',
+            ]
+        )->name('users.create');
+
+
+        Route::post(
+            '/users',
+            [
+                SuperAdminUserController::class,
+                'store',
+            ]
+        )->name('users.store');
+
+
+        Route::get(
+            '/users/{user}',
+            [
+                SuperAdminUserController::class,
+                'show',
+            ]
+        )->name('users.show');
+
+
+        Route::get(
+            '/users/{user}/edit',
+            [
+                SuperAdminUserController::class,
+                'edit',
+            ]
+        )->name('users.edit');
+
+
+        Route::put(
+            '/users/{user}',
+            [
+                SuperAdminUserController::class,
+                'update',
+            ]
+        )->name('users.update');
+
+
+        Route::patch(
+            '/users/{user}/toggle-status',
+            [
+                SuperAdminUserController::class,
+                'toggleStatus',
+            ]
+        )->name('users.toggle-status');
+
+
+        Route::delete(
+            '/users/{user}',
+            [
+                SuperAdminUserController::class,
+                'destroy',
+            ]
+        )->name('users.destroy');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PLANS D'ABONNEMENT
+        |--------------------------------------------------------------------------
+        */
+
+        Route::prefix('subscription-plans')
+            ->name('subscription-plans.')
+            ->group(function () {
+
+                Route::get(
+                    '/',
+                    [
+                        SubscriptionPlanController::class,
+                        'index',
+                    ]
+                )->name('index');
+
+
+                Route::get(
+                    '/create',
+                    [
+                        SubscriptionPlanController::class,
+                        'create',
+                    ]
+                )->name('create');
+
+
+                Route::post(
+                    '/',
+                    [
+                        SubscriptionPlanController::class,
+                        'store',
+                    ]
+                )->name('store');
+
+
+                Route::get(
+                    '/{subscriptionPlan}/edit',
+                    [
+                        SubscriptionPlanController::class,
+                        'edit',
+                    ]
+                )->name('edit');
+
+
+                Route::put(
+                    '/{subscriptionPlan}',
+                    [
+                        SubscriptionPlanController::class,
+                        'update',
+                    ]
+                )->name('update');
+
+
+                Route::patch(
+                    '/{subscriptionPlan}/toggle-status',
+                    [
+                        SubscriptionPlanController::class,
+                        'toggleStatus',
+                    ]
+                )->name('toggle-status');
+
+
+                Route::patch(
+                    '/{subscriptionPlan}/toggle-featured',
+                    [
+                        SubscriptionPlanController::class,
+                        'toggleFeatured',
+                    ]
+                )->name('toggle-featured');
+
+
+                Route::delete(
+                    '/{subscriptionPlan}',
+                    [
+                        SubscriptionPlanController::class,
+                        'destroy',
+                    ]
+                )->name('destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ABONNEMENTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::prefix('subscriptions')
+            ->name('subscriptions.')
+            ->group(function () {
+
+                Route::get(
+                    '/',
+                    [
+                        SubscriptionController::class,
+                        'index',
+                    ]
+                )->name('index');
+
+
+                Route::get(
+                    '/create',
+                    [
+                        SubscriptionController::class,
+                        'create',
+                    ]
+                )->name('create');
+
+
+                Route::post(
+                    '/',
+                    [
+                        SubscriptionController::class,
+                        'store',
+                    ]
+                )->name('store');
+
+
+                Route::get(
+                    '/{subscription}',
+                    [
+                        SubscriptionController::class,
+                        'show',
+                    ]
+                )->name('show');
+
+
+                Route::get(
+                    '/{subscription}/edit',
+                    [
+                        SubscriptionController::class,
+                        'edit',
+                    ]
+                )->name('edit');
+
+
+                Route::put(
+                    '/{subscription}',
+                    [
+                        SubscriptionController::class,
+                        'update',
+                    ]
+                )->name('update');
+
+
+                Route::patch(
+                    '/{subscription}/cancel',
+                    [
+                        SubscriptionController::class,
+                        'cancel',
+                    ]
+                )->name('cancel');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PAIEMENTS SUPER ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/payments',
+            [
+                PaymentController::class,
+                'index',
+            ]
+        )->name('payments.index');
+
+
+        Route::get(
+            '/payments/create',
+            [
+                PaymentController::class,
+                'create',
+            ]
+        )->name('payments.create');
+
+
+        Route::get(
+            '/payments/{payment}/edit',
+            [
+                PaymentController::class,
+                'edit',
+            ]
+        )->name('payments.edit');
+
+
+        Route::put(
+            '/payments/{payment}',
+            [
+                PaymentController::class,
+                'update',
+            ]
+        )->name('payments.update');
+
+
+        Route::post(
+            '/payments',
+            [
+                PaymentController::class,
+                'store',
+            ]
+        )->name('payments.store');
+
+
+        Route::get(
+            '/payments/{payment}/receipt',
+            [
+                PaymentController::class,
+                'receipt',
+            ]
+        )->name('payments.receipt');
+
+
+        Route::get(
+            '/payments/{payment}',
+            [
+                PaymentController::class,
+                'show',
+            ]
+        )->name('payments.show');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PARAMÈTRES SUPER ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/settings',
+            [
+                PlatformSettingController::class,
+                'index',
+            ]
+        )->name('settings.index');
+
+
+        Route::put(
+            '/settings',
+            [
+                PlatformSettingController::class,
+                'update',
+            ]
+        )->name('settings.update');
+
+
+        Route::delete(
+            '/settings/logo',
+            [
+                PlatformSettingController::class,
+                'removeLogo',
+            ]
+        )->name('settings.remove-logo');
+
+
+        Route::delete(
+            '/settings/favicon',
+            [
+                PlatformSettingController::class,
+                'removeFavicon',
+            ]
+        )->name('settings.remove-favicon');
+
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| ESPACE ENTREPRISE
+|--------------------------------------------------------------------------
+|
+| Toutes les routes entreprise passent par :
+|
+| auth
+| companyadmin
+|
+*/
+
+Route::middleware([
+    'auth',
+    'companyadmin',
+])
+    ->prefix('company')
+    ->name('company.')
+    ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SÉLECTEUR DE MODULES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/modules', [
+            ModuleLauncherController::class,
+            'index'
+        ])->name('modules.index');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DASHBOARD
+        |--------------------------------------------------------------------------
+        |
+        | Le dashboard reste toujours accessible.
+        |
+        */
+
+        Route::get(
+            '/dashboard',
+            [
+                CompanyDashboardController::class,
+                'index',
+            ]
+        )->name('dashboard');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : CATÉGORIES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:categories.view')
+            ->group(function () {
+
+                Route::get(
+                    '/categories',
+                    [
+                        CategoryController::class,
+                        'index',
+                    ]
+                )->name('categories.index');
+
+
+                Route::get(
+                    '/categories/{category}',
+                    [
+                        CategoryController::class,
+                        'show',
+                    ]
+                )->whereNumber('category')->name('categories.show');
+
+            });
+
+
+        Route::middleware('module_permission:categories.create')
+            ->group(function () {
+
+                Route::get(
+                    '/categories/create',
+                    [
+                        CategoryController::class,
+                        'create',
+                    ]
+                )->name('categories.create');
+
+
+                Route::post(
+                    '/categories',
+                    [
+                        CategoryController::class,
+                        'store',
+                    ]
+                )->name('categories.store');
+
+            });
+
+
+        Route::middleware('module_permission:categories.edit')
+            ->group(function () {
+
+                Route::get(
+                    '/categories/{category}/edit',
+                    [
+                        CategoryController::class,
+                        'edit',
+                    ]
+                )->name('categories.edit');
+
+
+                Route::put(
+                    '/categories/{category}',
+                    [
+                        CategoryController::class,
+                        'update',
+                    ]
+                )->name('categories.update');
+
+
+                Route::patch(
+                    '/categories/{category}/toggle-status',
+                    [
+                        CategoryController::class,
+                        'toggleStatus',
+                    ]
+                )->name('categories.toggle-status');
+
+            });
+
+
+        Route::middleware('module_permission:categories.delete')
+            ->group(function () {
+
+                Route::delete(
+                    '/categories/{category}',
+                    [
+                        CategoryController::class,
+                        'destroy',
+                    ]
+                )->name('categories.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : PRODUITS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:products.view')
+            ->group(function () {
+
+                Route::get(
+                    '/products',
+                    [
+                        ProductController::class,
+                        'index',
+                    ]
+                )->name('products.index');
+
+
+                
+                Route::get(
+                    '/products/{product}',
+                    [
+                        ProductController::class,
+                        'show',
+                    ]
+                )->whereNumber('product')->name('products.show');
+
+
+            });
+
+
+        Route::middleware('module_permission:products.create')
+            ->group(function () {
+
+                Route::get(
+                    '/products/create',
+                    [
+                        ProductController::class,
+                        'create',
+                    ]
+                )->name('products.create');
+
+
+                Route::post(
+                    '/products',
+                    [
+                        ProductController::class,
+                        'store',
+                    ]
+                )->name('products.store');
+
+            });
+
+
+        Route::middleware('module_permission:products.edit')
+            ->group(function () {
+
+                Route::get(
+                    '/products/{product}/edit',
+                    [
+                        ProductController::class,
+                        'edit',
+                    ]
+                )->name('products.edit');
+
+
+                Route::put(
+                    '/products/{product}',
+                    [
+                        ProductController::class,
+                        'update',
+                    ]
+                )->name('products.update');
+
+            });
+
+
+        Route::middleware('module_permission:products.delete')
+            ->group(function () {
+
+                Route::delete(
+                    '/products/{product}',
+                    [
+                        ProductController::class,
+                        'destroy',
+                    ]
+                )->name('products.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : STOCK
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:stock.view')
+            ->group(function () {
+
+                Route::get(
+                    '/stock',
+                    [
+                        StockController::class,
+                        'index',
+                    ]
+                )->name('stock.index');
+
+
+                Route::get(
+                    '/stock/history',
+                    [
+                        StockController::class,
+                        'history',
+                    ]
+                )->name('stock.history');
+
+            });
+
+
+        Route::middleware('module_permission:stock.entry')
+            ->group(function () {
+
+                Route::get(
+                    '/stock/entry',
+                    [
+                        StockController::class,
+                        'createEntry',
+                    ]
+                )->name('stock.entry');
+
+
+                Route::post(
+                    '/stock/entry',
+                    [
+                        StockController::class,
+                        'storeEntry',
+                    ]
+                )->name('stock.entry.store');
+
+            });
+
+
+        Route::middleware('module_permission:stock.exit')
+            ->group(function () {
+
+                Route::get(
+                    '/stock/exit',
+                    [
+                        StockController::class,
+                        'createExit',
+                    ]
+                )->name('stock.exit');
+
+
+                Route::post(
+                    '/stock/exit',
+                    [
+                        StockController::class,
+                        'storeExit',
+                    ]
+                )->name('stock.exit.store');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : CLIENTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:clients.view')
+            ->group(function () {
+
+                Route::get(
+                    '/clients',
+                    [
+                        ClientController::class,
+                        'index',
+                    ]
+                )->name('clients.index');
+
+
+                Route::get(
+                    '/clients/{client}',
+                    [
+                        ClientController::class,
+                        'show',
+                    ]
+                )->whereNumber('client')->name('clients.show');
+
+            });
+
+
+        Route::middleware('module_permission:clients.create')
+            ->group(function () {
+
+                Route::get(
+                    '/clients/create',
+                    [
+                        ClientController::class,
+                        'create',
+                    ]
+                )->name('clients.create');
+
+
+                Route::post(
+                    '/clients',
+                    [
+                        ClientController::class,
+                        'store',
+                    ]
+                )->name('clients.store');
+
+            });
+
+
+        Route::middleware('module_permission:clients.edit')
+            ->group(function () {
+
+                Route::get(
+                    '/clients/{client}/edit',
+                    [
+                        ClientController::class,
+                        'edit',
+                    ]
+                )->name('clients.edit');
+
+
+                Route::put(
+                    '/clients/{client}',
+                    [
+                        ClientController::class,
+                        'update',
+                    ]
+                )->name('clients.update');
+
+            });
+
+
+        Route::middleware('module_permission:clients.delete')
+            ->group(function () {
+
+                Route::delete(
+                    '/clients/{client}',
+                    [
+                        ClientController::class,
+                        'destroy',
+                    ]
+                )->name('clients.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : FOURNISSEURS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:suppliers.view')
+            ->group(function () {
+
+                Route::get(
+                    '/suppliers',
+                    [
+                        SupplierController::class,
+                        'index',
+                    ]
+                )->name('suppliers.index');
+
+
+                Route::get(
+                    '/suppliers/{supplier}',
+                    [
+                        SupplierController::class,
+                        'show',
+                    ]
+                )->whereNumber('supplier')->name('suppliers.show');
+
+            });
+
+
+        Route::middleware('module_permission:suppliers.create')
+            ->group(function () {
+
+                Route::get(
+                    '/suppliers/create',
+                    [
+                        SupplierController::class,
+                        'create',
+                    ]
+                )->name('suppliers.create');
+
+
+                Route::post(
+                    '/suppliers',
+                    [
+                        SupplierController::class,
+                        'store',
+                    ]
+                )->name('suppliers.store');
+
+            });
+
+
+        Route::middleware('module_permission:suppliers.edit')
+            ->group(function () {
+
+                Route::get(
+                    '/suppliers/{supplier}/edit',
+                    [
+                        SupplierController::class,
+                        'edit',
+                    ]
+                )->name('suppliers.edit');
+
+
+                Route::put(
+                    '/suppliers/{supplier}',
+                    [
+                        SupplierController::class,
+                        'update',
+                    ]
+                )->name('suppliers.update');
+
+            });
+
+
+        Route::middleware('module_permission:suppliers.delete')
+            ->group(function () {
+
+                Route::delete(
+                    '/suppliers/{supplier}',
+                    [
+                        SupplierController::class,
+                        'destroy',
+                    ]
+                )->name('suppliers.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : VENTES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:sales.view')
+            ->group(function () {
+
+                Route::get(
+                    '/sales',
+                    [
+                        SaleController::class,
+                        'index',
+                    ]
+                )->name('sales.index');
+
+
+                Route::get(
+                    '/sales/{sale}/invoice',
+                    [
+                        SaleController::class,
+                        'invoice',
+                    ]
+                )->name('sales.invoice');
+
+
+                Route::get(
+                    '/sales/{sale}',
+                    [
+                        SaleController::class,
+                        'show',
+                    ]
+                )->whereNumber('sale')->name('sales.show');
+
+            });
+
+
+        Route::middleware('module_permission:sales.create')
+            ->group(function () {
+
+                Route::get(
+                    '/sales/create',
+                    [
+                        SaleController::class,
+                        'create',
+                    ]
+                )->name('sales.create');
+
+
+                Route::post(
+                    '/sales',
+                    [
+                        SaleController::class,
+                        'store',
+                    ]
+                )->name('sales.store');
+
+            });
+
+
+        Route::middleware('module_permission:sales.cancel')
+            ->group(function () {
+
+                Route::delete(
+                    '/sales/{sale}',
+                    [
+                        SaleController::class,
+                        'destroy',
+                    ]
+                )->name('sales.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PAIEMENTS DES VENTES
+        |--------------------------------------------------------------------------
+        |
+        | La vente ET le module Paiements doivent être actifs.
+        |
+        */
+
+        Route::middleware([
+            'module:sales',
+            'module_permission:payments.create',
+        ])
+            ->group(function () {
+
+                Route::post(
+                    '/sales/{sale}/payments',
+                    [
+                        SalePaymentController::class,
+                        'store',
+                    ]
+                )->name('sales.payments.store');
+
+            });
+
+
+        Route::middleware([
+            'module:sales',
+            'module_permission:payments.cancel',
+        ])
+            ->group(function () {
+
+                Route::delete(
+                    '/sale-payments/{payment}',
+                    [
+                        SalePaymentController::class,
+                        'destroy',
+                    ]
+                )->name('sales.payments.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : ACHATS
+        |--------------------------------------------------------------------------
+        |
+        | Aucun edit/update pour les achats.
+        |
+        */
+
+        Route::middleware('module_permission:purchases.view')
+            ->group(function () {
+
+                Route::get(
+                    '/purchases',
+                    [
+                        PurchaseController::class,
+                        'index',
+                    ]
+                )->name('purchases.index');
+
+
+                Route::get(
+                    '/purchases/{purchase}',
+                    [
+                        PurchaseController::class,
+                        'show',
+                    ]
+                )->whereNumber('purchase')->name('purchases.show');
+
+
+                Route::get(
+                    '/purchases/{purchase}/invoice',
+                    [
+                        PurchaseController::class,
+                        'invoice',
+                    ]
+                )->name('purchases.invoice');
+
+            });
+
+
+        Route::middleware('module_permission:purchases.create')
+            ->group(function () {
+
+                Route::get(
+                    '/purchases/create',
+                    [
+                        PurchaseController::class,
+                        'create',
+                    ]
+                )->name('purchases.create');
+
+
+                Route::post(
+                    '/purchases',
+                    [
+                        PurchaseController::class,
+                        'store',
+                    ]
+                )->name('purchases.store');
+
+            });
+
+
+        Route::middleware('module_permission:purchases.cancel')
+            ->group(function () {
+
+                Route::delete(
+                    '/purchases/{purchase}',
+                    [
+                        PurchaseController::class,
+                        'destroy',
+                    ]
+                )->name('purchases.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PAIEMENTS DES ACHATS
+        |--------------------------------------------------------------------------
+        |
+        | L'achat ET le module Paiements doivent être actifs.
+        |
+        */
+
+        Route::middleware([
+            'module:purchases',
+            'module_permission:payments.create',
+        ])
+            ->group(function () {
+
+                Route::post(
+                    '/purchases/{purchase}/payments',
+                    [
+                        PurchasePaymentController::class,
+                        'store',
+                    ]
+                )->name('purchases.payments.store');
+
+            });
+
+
+        Route::middleware([
+            'module:purchases',
+            'module_permission:payments.cancel',
+        ])
+            ->group(function () {
+
+                Route::delete(
+                    '/purchase-payments/{payment}',
+                    [
+                        PurchasePaymentController::class,
+                        'destroy',
+                    ]
+                )->name('purchases.payments.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : PAIEMENTS
+        |--------------------------------------------------------------------------
+        |
+        | Le module existe déjà dans l'architecture.
+        | Les routes indépendantes pourront être ajoutées ici.
+        |
+        */
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : FINANCES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:finance.view')
+            ->group(function () {
+
+                Route::get(
+                    '/finance',
+                    [
+                        FinanceController::class,
+                        'index',
+                    ]
+                )->name('finance.index');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : RAPPORTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:reports.view')
+            ->group(function () {
+
+                Route::get(
+                    '/reports',
+                    [
+                        ReportController::class,
+                        'index',
+                    ]
+                )->name('reports.index');
+
+            });
+
+
+        Route::middleware('module_permission:reports.export')
+            ->group(function () {
+
+                Route::get(
+                    '/reports/export/excel',
+                    [
+                        ReportExportController::class,
+                        'excel',
+                    ]
+                )->name('reports.export.excel');
+
+
+                Route::get(
+                    '/reports/export/pdf',
+                    [
+                        ReportExportController::class,
+                        'pdf',
+                    ]
+                )->name('reports.export.pdf');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE : PRESTATIONS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:services.view')
+            ->group(function () {
+
+                Route::get(
+                    '/services',
+                    [
+                        ServiceController::class,
+                        'index',
+                    ]
+                )->name('services.index');
+
+            });
+
+
+        Route::middleware('module_permission:services.create')
+            ->group(function () {
+
+                Route::get(
+                    '/services/create',
+                    [
+                        ServiceController::class,
+                        'create',
+                    ]
+                )->name('services.create');
+
+
+                Route::post(
+                    '/services',
+                    [
+                        ServiceController::class,
+                        'store',
+                    ]
+                )->name('services.store');
+
+            });
+
+
+        Route::middleware('module_permission:services.edit')
+            ->group(function () {
+
+                Route::get(
+                    '/services/{service}/edit',
+                    [
+                        ServiceController::class,
+                        'edit',
+                    ]
+                )->name('services.edit');
+
+
+                Route::put(
+                    '/services/{service}',
+                    [
+                        ServiceController::class,
+                        'update',
+                    ]
+                )->name('services.update');
+
+
+                Route::patch(
+                    '/services/{service}/toggle-status',
+                    [
+                        ServiceController::class,
+                        'toggleStatus',
+                    ]
+                )->name('services.toggle-status');
+
+            });
+
+
+            /*
+|--------------------------------------------------------------------------
+| E-COMMERCE
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('module:ecommerce')
+    ->prefix('ecommerce')
+    ->name('ecommerce.')
+    ->group(function () {
+
+        Route::middleware(
+            'module_permission:ecommerce.view'
+        )->group(function () {
+
+            Route::get(
+                '/',
+                [EcommerceController::class, 'index']
+            )->name('index');
+
+            Route::get(
+                '/products',
+                [EcommerceController::class, 'products']
+            )->name('products.index');
+        });
+
+
+        Route::middleware(
+            'module_permission:ecommerce.create'
+        )->group(function () {
+
+            Route::get(
+                '/products/create',
+                [EcommerceController::class, 'create']
+            )->name('products.create');
+
+            Route::post(
+                '/products',
+                [EcommerceController::class, 'store']
+            )->name('products.store');
+        });
+
+
+        Route::middleware(
+            'module_permission:ecommerce.edit'
+        )->group(function () {
+
+            Route::get(
+                '/products/{ecommerceProduct}/edit',
+                [EcommerceController::class, 'edit']
+            )->name('products.edit');
+
+            Route::put(
+                '/products/{ecommerceProduct}',
+                [EcommerceController::class, 'update']
+            )->name('products.update');
+        });
+
+
+        Route::middleware(
+            'module_permission:ecommerce.delete'
+        )->group(function () {
+
+            Route::delete(
+                '/products/{ecommerceProduct}',
+                [EcommerceController::class, 'destroy']
+            )->name('products.destroy');
+        });
+    });
+
+
+        Route::middleware('module_permission:services.delete')
+            ->group(function () {
+
+                Route::delete(
+                    '/services/{service}',
+                    [
+                        ServiceController::class,
+                        'destroy',
+                    ]
+                )->name('services.destroy');
+
+            });
+
+            /*
+|--------------------------------------------------------------------------
+| E-COMMERCE — COMMANDES
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('module:ecommerce')
+    ->prefix('ecommerce')
+    ->name('ecommerce.')
+    ->group(function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | CONSULTATION
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:ecommerce.view')
+            ->group(function () {
+
+                Route::get('/orders', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceOrderController::class,
+                    'index'
+                ])->name('orders.index');
+
+                Route::get('/orders/{order}', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceOrderController::class,
+                    'show'
+                ])->whereNumber('order')->name('orders.show');
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CRÉATION
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:ecommerce.create')
+            ->group(function () {
+
+                Route::get('/orders/create', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceOrderController::class,
+                    'create'
+                ])->name('orders.create');
+
+                Route::post('/orders', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceOrderController::class,
+                    'store'
+                ])->name('orders.store');
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MODIFICATION / STATUT
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:ecommerce.edit')
+            ->group(function () {
+
+                Route::patch('/orders/{order}/status', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceOrderController::class,
+                    'updateStatus'
+                ])->name('orders.status');
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SUPPRESSION / ANNULATION
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware('module_permission:ecommerce.delete')
+            ->group(function () {
+
+                Route::delete('/orders/{order}', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceOrderController::class,
+                    'destroy'
+                ])->name('orders.destroy');
+            });
+    });
+
+    /*
+|--------------------------------------------------------------------------
+| E-COMMERCE — CLIENTS
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('module:ecommerce')
+    ->prefix('ecommerce')
+    ->name('ecommerce.')
+    ->group(function () {
+
+        Route::middleware('module_permission:ecommerce.view')
+            ->group(function () {
+
+                Route::get('/clients', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceClientController::class,
+                    'index'
+                ])->name('clients.index');
+
+                Route::get('/clients/{client}', [
+                    \App\Http\Controllers\CompanyAdmin\EcommerceClientController::class,
+                    'show'
+                ])->name('clients.show');
+            });
+    });
+
+    /*
+|--------------------------------------------------------------------------
+| E-COMMERCE — PAIEMENTS
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('module:ecommerce')
+    ->prefix('ecommerce')
+    ->name('ecommerce.')
+    ->group(function () {
+
+        Route::middleware('module_permission:ecommerce.view')->group(function () {
+            Route::get('/payments', [
+                \App\Http\Controllers\CompanyAdmin\EcommercePaymentController::class,
+                'index'
+            ])->name('payments.index');
+
+            Route::get('/payments/{payment}', [
+                \App\Http\Controllers\CompanyAdmin\EcommercePaymentController::class,
+                'show'
+            ])->whereNumber('payment')
+              ->name('payments.show');
+        });
+
+        Route::middleware('module_permission:ecommerce.create')->group(function () {
+            // Nouveau paiement : route déclarée explicitement
+            Route::get('/payments/create', [
+                \App\Http\Controllers\CompanyAdmin\EcommercePaymentController::class,
+                'create'
+            ])->name('payments.create');
+
+            Route::post('/orders/{order}/payments', [
+                \App\Http\Controllers\CompanyAdmin\EcommercePaymentController::class,
+                'store'
+            ])->whereNumber('order')
+              ->name('orders.payments.store');
+        });
+
+        Route::middleware('module_permission:ecommerce.delete')->group(function () {
+            Route::delete('/payments/{payment}', [
+                \App\Http\Controllers\CompanyAdmin\EcommercePaymentController::class,
+                'destroy'
+            ])->whereNumber('payment')
+              ->name('payments.destroy');
+        });
+    });
+
+        /*
+        |--------------------------------------------------------------------------
+        | UTILISATEURS ENTREPRISE
+        |--------------------------------------------------------------------------
+        |
+        | Les utilisateurs ne dépendent pas d'un module métier.
+        |
+        */
+
+        Route::middleware('permission:users.view')
+            ->group(function () {
+
+                Route::get(
+                    '/users',
+                    [
+                        UserController::class,
+                        'index',
+                    ]
+                )->name('users.index');
+
+            });
+
+
+        Route::middleware('permission:users.create')
+            ->group(function () {
+
+                Route::get(
+                    '/users/create',
+                    [
+                        UserController::class,
+                        'create',
+                    ]
+                )->name('users.create');
+
+
+                Route::post(
+                    '/users',
+                    [
+                        UserController::class,
+                        'store',
+                    ]
+                )->name('users.store');
+
+            });
+
+
+        Route::middleware('permission:users.edit')
+            ->group(function () {
+
+                Route::get(
+                    '/users/{user}/edit',
+                    [
+                        UserController::class,
+                        'edit',
+                    ]
+                )->name('users.edit');
+
+
+                Route::put(
+                    '/users/{user}',
+                    [
+                        UserController::class,
+                        'update',
+                    ]
+                )->name('users.update');
+
+
+                Route::patch(
+                    '/users/{user}/toggle-status',
+                    [
+                        UserController::class,
+                        'toggleStatus',
+                    ]
+                )->name('users.toggle-status');
+
+            });
+
+
+        Route::middleware('permission:users.delete')
+            ->group(function () {
+
+                Route::delete(
+                    '/users/{user}',
+                    [
+                        UserController::class,
+                        'destroy',
+                    ]
+                )->name('users.destroy');
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PERMISSIONS UTILISATEURS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/users/{user}/permissions',
+            [
+                UserPermissionController::class,
+                'edit',
+            ]
+        )
+            ->name('users.permissions.edit')
+            ->middleware('permission:users.edit');
+
+
+        Route::put(
+            '/users/{user}/permissions',
+            [
+                UserPermissionController::class,
+                'update',
+            ]
+        )
+            ->name('users.permissions.update')
+            ->middleware('permission:users.edit');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PARAMÈTRES PAIEMENTS
+        |--------------------------------------------------------------------------
+        |
+        | Ici nous gardons volontairement :
+        |
+        | module:payments
+        | permission:settings.*
+        |
+        | car "settings.view/edit" appartient aux paramètres,
+        | et non au module payments dans ModuleRegistry.
+        |
+        */
+
+        Route::middleware('module:payments')
+            ->group(function () {
+
+                Route::middleware('permission:settings.view')
+                    ->group(function () {
+
+                        Route::get(
+                            '/settings/payments',
+                            [
+                                PaymentSettingController::class,
+                                'edit',
+                            ]
+                        )->name('settings.payments');
+
+                    });
+
+
+                Route::middleware('permission:settings.edit')
+                    ->group(function () {
+
+                        Route::put(
+                            '/settings/payments',
+                            [
+                                PaymentSettingController::class,
+                                'update',
+                            ]
+                        )->name('settings.payments.update');
+
+                    });
+
+            });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PARAMÈTRES ENTREPRISE
+        |--------------------------------------------------------------------------
+        |
+        | Les paramètres généraux restent indépendants
+        | des modules métier.
+        |
+        */
+
+        Route::prefix('settings')
+            ->name('settings.')
+            ->group(function () {
+
+                Route::get(
+                    '/',
+                    [
+                        SettingController::class,
+                        'index',
+                    ]
+                )
+                    ->name('index')
+                    ->middleware('permission:settings.view');
+
+
+                Route::put(
+                    '/',
+                    [
+                        SettingController::class,
+                        'update',
+                    ]
+                )
+                    ->name('update')
+                    ->middleware('permission:settings.edit');
+
+
+                Route::delete(
+                    '/logo',
+                    [
+                        SettingController::class,
+                        'removeLogo',
+                    ]
+                )
+                    ->name('logo.remove')
+                    ->middleware('permission:settings.edit');
+
+            });
+
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| PROFIL
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')
+    ->group(function () {
+
+
+        Route::get(
+            '/profile',
+            [
+                ProfileController::class,
+                'edit',
+            ]
+        )->name('profile.edit');
+
+
+        Route::patch(
+            '/profile',
+            [
+                ProfileController::class,
+                'update',
+            ]
+        )->name('profile.update');
+
+
+        Route::delete(
+            '/profile',
+            [
+                ProfileController::class,
+                'destroy',
+            ]
+        )->name('profile.destroy');
+
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| WEBHOOKS PAIEMENTS
+|--------------------------------------------------------------------------
+|
+| Ces routes restent publiques car elles sont appelées
+| par les opérateurs de paiement.
+|
+*/
+
+Route::post(
+    '/webhooks/payments/orange-money',
+    [
+        PaymentWebhookController::class,
+        'orange',
+    ]
+)->name('webhooks.payments.orange');
+
+
+Route::post(
+    '/webhooks/payments/mtn-momo',
+    [
+        PaymentWebhookController::class,
+        'mtn',
+    ]
+)->name('webhooks.payments.mtn');
+
+
+/*
+|--------------------------------------------------------------------------
+| PATH IMAGES / STORAGE
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/storage/{path}',
+    function ($path) {
+
+        if (
+            !Storage::disk('public')
+                ->exists($path)
+        ) {
+
+            abort(404);
+
+        }
+
+        return Storage::disk('public')
+            ->response($path);
+
+    }
+)->where(
+    'path',
+    '.*'
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| AUTHENTIFICATION
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__ . '/auth.php';
+
+
+========== app/Models/Company.php ==========
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Module;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\User;
+
+class Company extends Model
+{
+    protected $fillable = [
+        'name',
+        'slug',
+        'email',
+        'phone',
+        'address',
+        'city',
+        'country',
+        'logo',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    /**
+     * Utilisateurs appartenant à l'entreprise.
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function paymentSettings(): HasOne
+{
+    return $this->hasOne(CompanyPaymentSetting::class);
+}
+
+public function subscriptions(): HasMany
+{
+    return $this->hasMany(Subscription::class);
+}
+
+public function services(): HasMany
+{
+    return $this->hasMany(Service::class);
+}
+
+/**
+ * Modules de l'entreprise.
+ */
+public function modules(): BelongsToMany
+{
+    return $this->belongsToMany(
+        Module::class,
+        'company_modules'
+    )
+        ->withPivot([
+            'is_active',
+            'activated_at',
+            'deactivated_at',
+        ])
+        ->withTimestamps();
+}
+
+
+/**
+ * Modules actuellement actifs pour l'entreprise.
+ */
+public function activeModules(): BelongsToMany
+{
+    return $this->modules()
+        ->where('modules.is_active', true)
+        ->wherePivot('is_active', true)
+        ->orderBy('modules.sort_order')
+        ->orderBy('modules.name');
+}
+
+
+/**
+ * Vérifie si un module est actif pour l'entreprise.
+ */
+public function hasModule(string $slug): bool
+{
+    return $this->activeModules()
+        ->where('modules.slug', $slug)
+        ->exists();
+}
+
+
+}
+
+
+========== database/seeders/DatabaseSeeder.php ==========
+
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    use WithoutModelEvents;
+
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        $this->call([
+            SuperAdminSeeder::class,
+        ]);
+
+        $this->call([
+            PermissionSeeder::class,
+            RolePermissionSeeder::class,
+        ]);
+        $this->call([
+            ModuleSeeder::class,
+        ]);
+    }
+}

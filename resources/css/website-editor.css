@@ -1,0 +1,7 @@
+.ws-editor-tools{display:flex;gap:7px;flex-wrap:wrap;padding:10px;border:1px solid #dbe3ee;border-bottom:0;border-radius:12px 12px 0 0;background:#f8fafc}
+.ws-editor-tools button{border:1px solid #cbd5e1;background:white;border-radius:7px;padding:8px 11px;font-weight:600;cursor:pointer;color:#263449}
+.ws-editor-tools button:hover{background:#e8efff}
+.ws-editor-area{min-height:290px;padding:18px;background:#fff;border:1px solid #cbd5e1;border-radius:0 0 12px 12px;line-height:1.7;outline:none;overflow-wrap:anywhere}
+.ws-editor-area:focus{border-color:#4f46e5;box-shadow:0 0 0 3px #4f46e51a}
+.ws-editor-area h2,.ws-editor-area h3{margin:12px 0}.ws-editor-area p{margin:8px 0}
+.ws-editor-area a{color:#2563eb}
